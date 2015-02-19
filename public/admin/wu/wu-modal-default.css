@@ -1,0 +1,86 @@
+body.w-open{overflow:hidden !important}
+.wu-modal-overlay{
+
+*background-color:#555;
+_background-color:#555;
+background: rgba(255, 255, 255, 0.8);
+overflow: auto;position: fixed;top: 0;left: 0;width: 100%;height: 100%;padding: 0 0 40px 0;
+transition:all 0.2s ease;
+-webkit-transition:all 0.2s ease;
+-moz-transition:all 0.2s ease;
+-o-transition:all 0.2s ease;
+z-index:500;
+filter: alpha(opacity=0);
+-moz-opacity: 0;
+opacity: 0;
+}
+.wu-modal-overlay.load .wu-modal-indicator,
+.wu-modal-overlay.w-open{
+filter: alpha(opacity=100);
+-moz-opacity:1;
+opacity: 1;}
+.wu-modal-indicator{text-align: center;
+position: relative;
+top: 46%;filter: alpha(opacity=0);
+-moz-opacity:0;
+opacity: 0;
+width: 200px;
+margin: 0 auto;
+font-size: 14px;
+color: #8C8C8C;}
+.wu-modal-indicator,
+.wu-modal-window{
+transition:all 0.4s ease;
+-webkit-transition:all 0.4s ease;
+-moz-transition:all 0.4s ease;
+-o-transition:all 0.4s ease;
+}
+.wu-modal-window{opacity:0;
+margin: 20px auto 40px auto;
+position: relative;
+min-width: 320px;
+max-width: 700px;
+width:320px;
+min-height: 100px;
+background: #fff;
+
+box-shadow: 0 0px 0px 10px rgba(194, 194, 194, 0.4);
+-moz-box-shadow: 0 0px 0px 10px rgba(194, 194, 194, 0.4);
+-webkit-box-shadow: 0 0px 0px 10px rgba(194, 194, 194, 0.4);
+color: #666;
+font-size: 14px;
+
+-webkit-transform: scale(0.8);
+-ms-transform: scale(0.8);
+transform: scale(0.8);
+}
+.wu-modal-window.w-open{filter: alpha(opacity=100);
+-moz-opacity:1;
+opacity: 1;
+-webkit-transform: scale(1);
+-ms-transform: scale(1);
+transform: scale(1);
+}
+.wu-modal-window-close{position: absolute;
+top: 5px;
+right: 5px;
+height: 32px;
+text-align: center;
+line-height: 30px;
+font-size: 20px;
+font-weight: bold;
+font-family: tahoma;
+color: #919191;
+cursor: pointer;
+width: 32px;
+
+filter: alpha(opacity=42);
+-moz-opacity:.42;
+opacity: .42;}
+	.wu-modal-window-close:hover{color:#333}
+.wu-modal-window-title{padding: 10px 20px;
+background: #F1F1F1;margin:0;
+font-family: 'arial', sans-serif;
+font-size: 20px;
+font-weight: normal;}
+.wu-modal-window-content{padding:20px}

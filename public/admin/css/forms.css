@@ -1,0 +1,122 @@
+.forms-s1{font-size:90%;}
+.forms-s1 label{}
+.forms-s1 .groups-title{margin: 1em 0 .5em 0;
+font-size: 1.4em;
+font-weight: normal;
+position: relative;
+color: #717171;
+height: 1.3em;}
+.forms-s1 .form-title {font-family: 'Roboto', sans-serif;}
+.forms-s1 .groups-title span{float: left;
+background: #FFF;position:relative;z-index:2;
+padding: 0 .5em 0 0;
+display: block;}
+.forms-s1 .groups-title:before{content: ' ';
+position: absolute;
+width: 100%;
+height: 0;
+border-top: 1px solid #ccc;
+top: 49%;
+z-index: 1;}
+.forms-s1 .checkboxs-list{margin-bottom:1em}
+.forms-s1 .checkboxs-list input{position: relative;
+top: 2px;
+margin-right: 5px;}
+.forms-s1 .checkboxs-list label{cursor: pointer;margin-bottom: .5em;}
+.forms-s1 .checkboxs-list label:hover{color:#F78254}
+.forms-s1 .hr{margin-bottom: 1.0999999999999999em;width:100%;height:0;border-top:1px solid #ccc}
+
+
+
+input.input-fake{background: transparent;border: none}
+input.input-fake:focus{box-shadow: none}
+.btn-orange{color:#fff;background-color:#F78254}
+.btn-orange:hover{color:#fff;background-color:#E2612E}
+form.load .btn-orange{color:rgba(255, 255, 255, 0.5);background-color:#F78254;background-image:url(../img/loading.gif);background-repeat:repeat;background-size:cover}
+.btn-add{
+padding: 0 14px;
+background: #F78254;
+border-radius: 2px;
+color: #FFFFFF;
+cursor: pointer;
+line-height: 32px;
+font-weight: bold;
+text-align: left;
+font-size: 12px;
+}
+.btn-add:hover{color:#Fff}
+	.btn-add .fa{margin-right:10px;}
+
+.wu-selector{min-width: 100px;display: block;text-align: left;background: #f6f6f6;border: 1px solid #C2C2C2;color: #666;font-size: 12px;border-radius: 2px;-moz-border-radius: 2px;-webkit-border-radius: 2px;font-weight: bold;height: 30px;padding: 0 25px 0 10px;margin: 0;line-height: 30px;cursor: pointer;-moz-user-select: none;-webkit-user-select: none;user-select: none;min-width: 70px;position:relative}
+.wu-selector.checked{background:#ddd}
+.wu-selector.disabled{color: #A7A7A7;cursor:default}
+	.wu-selector .sel-item{font-weight:bold;line-height: 30px;}
+	.wu-selector .sel-item-empty{font-weight: normal;color: #989898;}
+	.wu-selector .sel-section{min-width: 200px;display:none;z-index: 10;position: absolute;width: 100%;left: -1px;top: 100%;margin-top: 5px;background: #fff;box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.14);-moz-box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.14);-webkit-box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.14);border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px;}
+		.wu-selector.checked .sel-section{display:block}
+		/*.wu-selector .sel-section:before{position:absolute;top:-10px;left:10%;content:' ';display:block;width:0;height:0;border:10px solid transparent;border-bottom-color:#fff}*/
+	.wu-selector .item{position: relative;font-weight:normal;padding:5px 10px}
+	.wu-selector .item.active{font-weight:bold}
+	.wu-selector .item:hover{background: #f6f6f6;}
+	.wu-selector .item-name{line-height: 20px}
+		.wu-selector .item .wu-sel-item-icon{position: absolute;display: none;right: 5px;width: 20px;top: 50%;height: 20px;margin-top: -10px;text-align: center;line-height: 20px;color: #EC7E5E;}
+		.wu-selector .item.active .wu-sel-item-icon{display:block}
+	.wu-selector .item-description{line-height: 14px;font-weight: normal;color: #9E9E9E;}
+	.wu-selector .wu-sel-icon{text-align: center;line-height: 20px;opacity:0.5;width: 20px;height: 20px;position: absolute;right: 5px;top: 50%;margin: -10px 0 0 0;}
+		.wu-selector.disabled .wu-sel-icon{opacity:0.3}
+		
+.wu-checkbox-field {padding: 2px 0;min-height:24px;margin-bottom: 1.0999999999999999em;}
+.wu-checkbox-field:after {
+content: "";
+display: table;
+clear: both;
+}
+.wu-checkbox-field .wu-checkbox{display: block;
+font-size:11px;
+margin: 0 .5em 0 0 ;
+width: 50px;cursor:pointer;
+-webkit-transition:  200ms ease;
+transition:  200ms ease;
+height: 24px;float:left;
+line-height: 2em;
+position: relative;
+background: #ABABAB;
+text-align: center;
+border-radius: 15px;}
+.wu-checkbox:hover{background:#888}
+.wu-checkbox.checked{background:#F78254}
+.wu-checkbox input{display: none;}
+.wu-checkbox .wu-checkbox-ind{position: absolute;
+left: 0;
+width: 20px;
+-webkit-transition:  200ms ease;
+transition:  200ms ease;
+background: #FFFFFF;
+height: 20px;margin-left:2px;
+top: 2px;
+border-radius: 10px;}
+.wu-checkbox.checked .wu-checkbox-ind{left:100%;margin-left:-22px;}
+.wu-checkbox .wu-checkbox-sts{color: #fff;
+position: absolute;font-weight:bold;
+width: 100%;}
+.wu-checkbox .wu-checkbox-sts.wu-checkbox-sts-on{padding-right: 20px}
+
+.wu-checkbox .wu-checkbox-sts.wu-checkbox-sts-off{padding-left: 20px}
+
+.wu-checkbox.checked .wu-checkbox-sts.wu-checkbox-sts-on{display:block;}
+
+.wu-checkbox.checked .wu-checkbox-sts.wu-checkbox-sts-off,
+.wu-checkbox .wu-checkbox-sts.wu-checkbox-sts-on{display:none;}
+
+.wu-checkbox-label{display: inline-block;}
+
+.Zebra_DatePicker {font-family:arial !important}
+.Zebra_DatePicker .dp_daypicker td, .Zebra_DatePicker .dp_daypicker th, .Zebra_DatePicker .dp_monthpicker td, .Zebra_DatePicker .dp_yearpicker td
+{border-color:transparent !important}
+.Zebra_DatePicker .dp_daypicker th{background: rgba(0, 0, 0, 0.11) !important;
+color: #fff !important}
+.Zebra_DatePicker td.dp_hover{background: #F78254 !important;
+color: #FFF !important;font-weight:bold;}
+		
+		
+		
