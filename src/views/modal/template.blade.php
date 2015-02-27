@@ -1,6 +1,6 @@
 
 @if($template = Template::findOrNew(Input::get('id')))
-
+<meta name="wu-modal-title" content="Редактирование шаблона">
 	{{ Form::model($template,['data-action'	=> 'templates/save', 'data-pubs' => 'notifyModal reload', 'class' => 'forms end js-form']) }}
 		
 		{{ Form::hidden('id') }}
