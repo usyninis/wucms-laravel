@@ -105,6 +105,18 @@ Route::group(
 );
 
 
+
+
+
+Route::get('develop', array(
+	'as'		=> 'develop',
+	'uses'		=> 'Usyninis\Wucms\AppController@develop'
+));
+
+
+
+//require app_path()."/routes.php";
+
 Route::get('/', array(
 	'as'		=> 'index',
 	'before'	=> 'develop',
@@ -117,12 +129,6 @@ Route::get('/', array(
 		return Response::json($list);		
 		
 	}  */
-));
-
-
-Route::get('develop', array(
-	'as'		=> 'develop',
-	'uses'		=> 'Usyninis\Wucms\AppController@develop'
 ));
 
 Route::get('{all}', array(

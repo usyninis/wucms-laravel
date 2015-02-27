@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+use URLify;
+
+
 class UnitsController extends Controller {
 
 	/**

@@ -1,4 +1,4 @@
-@extends('admin.template')
+@extends('wucms::template')
 
 @section('head')
 <title>map</title>
@@ -35,7 +35,7 @@
 	
 			<a class="el-s1 {{ ( ! Request::segment(3)?'active':'') }}" href="{{ route('admin.albums.index') }}">
 			<div class="el-right-s">
-				<span class="badge badge-small">{{ GImage::count() }}</span>
+				<span class="badge badge-small">{{ Image::count() }}</span>
 			</div>
 			<div class="el-name">Все фотографии</div>
 			</a>
@@ -60,7 +60,7 @@
 <div class="unit-80">
 	
 		
-			@include('admin.albums.album')
+			@include('wucms::albums.album')
 		
 	
 </div>

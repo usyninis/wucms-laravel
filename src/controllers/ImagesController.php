@@ -54,7 +54,7 @@ class ImagesController extends Controller {
 	 */
 	public function store()
 	{
-		$path = Config::get('gallery.upload_images_path').'/'.date('Y-m-d');
+		$path = Config::get('wucms::gallery.upload_images_path').'/'.date('Y-m-d');
 		
 		$root = public_path()?:$_SERVER['DOCUMENT_ROOT'];		
 		
@@ -163,7 +163,26 @@ class ImagesController extends Controller {
 	 */
 	public function destroy($id)
 	{
+		$json = [];
 		
+		if($image = Image::find($id))
+		{
+			
+			if (File::exists(public_path().$image->src)) File::delete(public_path().$image->src);
+			$json['status'] = 'ok';
+			$json['id'] = $image->id;
+			$json['message'] = 'Изображение удалено';
+			$album_id = $image->album_id;					
+			$image->delete();
+			
+			if($album_id) Album::find($album_id)->save();					
+		}
+		else
+		{
+			$json['status'] = 'error';
+			$json['message'] = 'Ошибка удаления';
+		}
+		return Response::json($json);
 	}
 
 

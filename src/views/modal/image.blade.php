@@ -1,5 +1,5 @@
 
-@if($image = GImage::find(Input::get('id')))
+@if($image = Image::find(Input::get('id')))
 
 	{{ Form::model($image,array(
 		'route' => array('admin.images.update',$image->id),		

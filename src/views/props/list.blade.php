@@ -55,14 +55,16 @@
 		@forelse($props as $prop)
 		
 		<div class="el-s1 js-wu-modal" data-title="Редактировать свойство" data-code="prop" data-id="{{ $prop->id }}">
+		<?php /*
 		<div class="el-left-s">
 			<div class="el-btn"><i class="fa fa-ellipsis-v"></i></div>
 		</div>
+		*/?>
 			<div class="el-name">{{ $prop->name }}</div>
 			<div class="el-desc">{{ $prop->description }}</div>
 		</div>
 		@empty
-			@include('admin.ui.empty')		
+			@include('wucms::ui.empty')		
 		@endforelse
 		
 		</div>
@@ -91,7 +93,7 @@
 					
 						<div id="prop-value" class="wu-selector js-wu-modal" data-id="{{ $aprop->value }}" data-code="units" data-pub="selector:paste" data-selector="#prop-value">
 						{{ Form::hidden('value',$aprop->value) }}
-							<i class="wu-sel-icon fa fa-ellipsis-h"></i>
+							<?php /*<i class="wu-sel-icon fa fa-ellipsis-h"></i> */ ?>
 							@if($vunit = Unit::find($aprop->value))
 								<div class="sel-item">{{ $vunit->name }}</div>
 							@else

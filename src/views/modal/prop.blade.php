@@ -12,6 +12,10 @@
 		'class' => 'js-form forms-s1 forms end forms-s',
 		'method' => 'put',
 	]) }}
+	
+<meta name="wu-modal-title" content="Редактирование свойства">
+
+		
 @elseif($prop = new Prop)
 	
     {{ Form::open([
@@ -20,6 +24,10 @@
 		'class' => 'js-form forms-s1 forms end forms-s',
 		
 	]) }}
+	
+<meta name="wu-modal-title" content="Создание свойства">
+
+	
 @endif
 
 	

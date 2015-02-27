@@ -1,8 +1,12 @@
 <?php
 
 
-App::missing(function($exception)
+/* App::missing(function($exception)
 {
+	//die('App::missing');
+	
+	return App::make('Usyninis\Wucms\AppController')->unit();
+	
 	
 	//return App::make('Usyninis\Wucms\AppController')->unit();
 	$segments = Request::segments();
@@ -22,8 +26,8 @@ App::missing(function($exception)
     return Response::view('template::errors.error404', array(), 404);
 	
 });
+ */
 
-/* 
 App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $e)
 {
 	
@@ -44,4 +48,4 @@ App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $e)
 	//return ($old_code);
     return Response::view('template::errors.error404', array(), 404);
 
-});  */
+}); 

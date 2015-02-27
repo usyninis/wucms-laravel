@@ -15,7 +15,7 @@ return array(
 		
 		'thumb_enable'			=> true,	
 		'thumb_path'			=> 'upload/thumb',		
-		'watermark_src'			=> 'admin/img/watermark.png'
+		'watermark_src'			=> 'img/watermark.png'
 		
 	)
 	

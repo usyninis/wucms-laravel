@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\URL;
 
 class GroupsController extends Controller {
@@ -70,7 +71,7 @@ class GroupsController extends Controller {
 		
 		
 		
-		if($units = Input::get('units'))
+		/* if($units = Input::get('units'))
 		{
 			foreach($units as $key => $unit_id)
 				$units[$key] = [ 'sort' => $key, 'unit_id' => $unit_id ];
@@ -81,7 +82,7 @@ class GroupsController extends Controller {
 		{
 			$group->units()->detach($units);
 		}		
-		
+		 */
 		return Response::json(['status'=>'ok','message'=>'Группа «'.$group->name.'»сохранена']);
 	}
 
@@ -119,7 +120,22 @@ class GroupsController extends Controller {
 	 */
 	public function update($id)
 	{
-		
+		$group = Group::find(Input::get('group_id'));
+		//print_r($group);
+		if($units = Input::get('units'))
+		{
+			$units_sync = [];
+			foreach($units as $key => $unit_id)
+				$units_sync[$unit_id] = [ 'sort' => $key ];
+			
+			$group->units()->sync($units_sync);
+			
+			
+		}
+		else
+		{
+			$group->units()->detach();
+		}	
 	}
 
 

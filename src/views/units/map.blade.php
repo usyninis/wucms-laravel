@@ -1,4 +1,4 @@
-@extends('admin.template')
+@extends('wucms::template')
 
 @section('head')
 <title>map</title>
@@ -30,7 +30,7 @@ $(function  () {
 @stop
 
 @section('content')
-@include('admin.panel2')
+@include('wucms::panel2')
 
 <div class="section-content">
 <div class="unit-d-w">
@@ -283,7 +283,7 @@ border-radius: 2px;}
 		@if(!empty($unit))
 		<div class="section-unit-form">
 				
-				@include('admin.units.edit', array('unit'=>$unit))
+				@include('wucms::units.edit', array('unit'=>$unit))
 				
 		</div>
 		@else

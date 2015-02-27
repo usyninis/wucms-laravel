@@ -30,7 +30,9 @@
 <div class="sdfdsdf unit-d-units-list units-row">
 
 @if($list_unit)
-	<div class="units-row">
+	<div class="units-row" style="margin-bottom: .8em;
+padding-bottom: .8em;
+border-bottom: 1px solid #D5D5D5;">
 	
 		<a class="unit js-wu-modal" data-width="400" data-code="units2" data-id="{{ $unit->id }}" data-list-id="{{ $list_unit->parent_id }}" style="float:left;width:60px;text-align:center;margin-right:10px;">
 			<div class="u-name" style="line-height:200%"> <i class="fa fa-chevron-left"></i></div>
@@ -43,23 +45,32 @@
 	</div>
 @endif
 
-@foreach(Unit::whereParentId(Input::get('listId'))->get() as $sunit)
-<?php if($sunit->id==$unit->id) continue; ?>
-									
 
 
-		
-		<a data-id="{{ $unit->id }}" class="unit js-wu-modal" data-width="400" data-code="units2" data-list-id="{{ $sunit->id }}">
+@if($units = Unit::whereParentId(Input::get('listId'))->where('id','!=',$unit->id)->get())
 
-			<div class="u-name">{{ $sunit->name }}</div>
-			<div class="u-url">{{ $sunit->url }}</div>
+	@if($units->count())
+	 
+		@foreach($units as $sunit)
+					
+			<a data-id="{{ $unit->id }}" class="unit js-wu-modal" data-width="400" data-code="units2" data-list-id="{{ $sunit->id }}">
+
+				<div class="u-name">{{ $sunit->name }}</div>
+				<div class="u-url">{{ $sunit->url }}</div>
+				
+			</a>
 			
-		</a>
-		
-		
+		@endforeach
+
+	@else
+
+		@include('wucms::ui.empty')	
+
+	@endif
+
+@endif
+
 	
-	
-@endforeach
 
 </div>
 {{ Form::open(['class'=>'forms end js-form','data-action'=>'units/move','data-pubs'=>'notifyModal reload']) }}

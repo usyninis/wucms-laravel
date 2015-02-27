@@ -22,7 +22,7 @@
 	<div class="a-image js-no-move">
 		<div class="file-upload-form-fake"><div class="f-text">Загрузить фото</div></div>
 		{{ Form::open(array(
-			'action'		=> array('ImagesController@store'),
+			'route'		=> 'admin.images.store',
 			'files'		=> true,
 			'class'		=> 'js-form forms js-upload-form file-upload-form',
 			'data-pubs'	=> 'images/add',
@@ -42,7 +42,7 @@
 	
 
 @forelse($images as $image)
-	@include('admin.albums.image',['image'=>$image])
+	@include('wucms::albums.image',['image'=>$image])
 @empty
 	нет фото
 @endforelse

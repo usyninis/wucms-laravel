@@ -26,6 +26,9 @@
 	$type_props = $type->props;
 ?>
 
+	<meta name="wu-modal-title" content="Редактирование типа">
+	<meta name="wu-modal-width" content="350">
+	
 {{ Form::model($type,[
 	'data-action'	=> 'types/save',
 	'data-pubs'	=> 'reload notifyModal',
@@ -42,7 +45,7 @@
 	{{ Form::wuSelector('template_id',Template::all()->keyBy('id')->toArray(),$type->template_id) }}
 	</label>
 	
-	<h3 class="groups-title"><span>Свойства объектов этого типа</span></h3>
+	<div class="groups-title"><span>Свойства объектов этого типа</span></div>
 	<div class="checkboxs-list">
 	@if($props = Prop::all())
 		@foreach($props as $prop)

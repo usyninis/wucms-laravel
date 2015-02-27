@@ -125,6 +125,8 @@ class Unit extends Eloquent
         {   
             //	change parent id
 			Unit::where('parent_id','=',$unit->id)->update(array('parent_id' => $unit->parent_id));
+			DB::table('units_childrens')->where('unit_id','=',$unit->id)->orWhere('children_id','=',$unit->id)->delete();
+			
 			
 			//delete attach
 			UnitProp::where('unit_id','=',$unit->id)->delete();
@@ -220,7 +222,7 @@ class Unit extends Eloquent
 	{		
 
 		if($value) return $value;
-		//return $this->type->template_id;
+		return $this->type->template_id;
 		
 	}
 	
@@ -262,6 +264,17 @@ class Unit extends Eloquent
 		return $query->whereMain(1)->first();
 	}
 	
+	public function scopeAllChildrens($query,$unit_id)
+	{
+		$query = $query->join('units_childrens as uc', function($join) use ($unit_id)
+		{
+			$join->on('uc.children_id', '=', Unit::getTable().'.id')
+				->on('uc.unit_id', '=', DB::raw($unit_id));
+		});
+		return $query;
+		//return DB::table('units_props')->where('unit_id','=',$this->id)->get();
+	}
+	
 	public function parents()
 	{
 		$cunit = $this;
@@ -275,8 +288,12 @@ class Unit extends Eloquent
 			$cunit = $parent_unit;	
 		}
 		if( ! $parents) return false;
-		$parents = array_reverse($parents);		
+		$parents = array_reverse($parents);	
 		return $parents;
+		/* return Unit::join('units_childrens', 'units.id', '=', 'units_childrens.unit_id')
+			->where('units_childrens.children_id','=',$this->id)
+			->orderBy('units_childrens.level','ASC')
+			->get(); */
 	}
 
 	public function children()
@@ -346,7 +363,7 @@ class Unit extends Eloquent
 		
 		if($prop = Prop::whereCode($code)->first())
 		{
-			$alias = 't_prop_'.$prop->code;
+			$alias = 't_prop_'.$prop->id;
 			$id = $prop->id;
 			
 			$query = $query->addSelect($alias.'.'.$prop->value_key.' as prop_'.$prop->code.'');
@@ -379,6 +396,7 @@ class Unit extends Eloquent
 		/* $prop_codes = [];
 		foreach($props_array as $i => $arg)
 			if($i>0) $prop_codes[] = current((array)$arg); */
+		$prop_codes = (array) $prop_codes;
 		$query = $query->select(Unit::getTable().'.*');
 		//$query = $query->addSelect('units.id');
 		if($props = Prop::whereIn('code',$prop_codes)->get())
@@ -517,6 +535,8 @@ class Unit extends Eloquent
 		return $this->hasMany('UnitProp');
 		//return DB::table('units_props')->where('unit_id','=',$this->id)->get();
 	}
+
+	
 
 
 	

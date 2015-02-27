@@ -40,12 +40,12 @@ class Album extends \Eloquent
 	
 	public function images()
 	{
-		return $this->hasMany('Image')->orderBy('id','DESC');
+		return $this->hasMany('Usyninis\Wucms\Image')->orderBy('id','DESC');
 	}
 	
 	public function image()
 	{
-		return $this->belongsTo('Image');
+		return $this->belongsTo('Usyninis\Wucms\Image');
 	}
 
 	

@@ -13,7 +13,7 @@ color: #646464;}
 .header-s1{padding: .8em 1em;background: #DADADA;color: #717171;}
 .header-s2 .h-title{font-family: 'Open Sans', sans-serif;margin:0}
 .header-s2{padding: .8em 1em;border-bottom:1px solid #ccc}
-.header-s1 .h-title{font-family: 'Open Sans', sans-serif;margin:0}
+.header-s1 .h-title{font-family: 'Open Sans', sans-serif;margin:0;font-weight:normal}
 
 .a-image{width: 120px;
 height: 120px;
@@ -26,9 +26,9 @@ overflow: hidden;
 text-align: center;}
 	.a-image.ckecked{border: 2px solid green;background:green}
 	
-	.a-image .delete{position: absolute;
+	.a-image .btn-delete{position: absolute;
 right: 0;
-top: 0;
+top: 0;border:none;
 width: 24px;text-align:center;
 height: 24px;display:none;
 background: rgba(6, 6, 6, 0.66);
@@ -36,8 +36,8 @@ line-height: 24px;
 color: #fff;
 font-size: 14px;
 cursor: pointer;}
-	.a-image:hover .delete{display:block;}
-	.a-image .delete:hover{background-color: #F78254;}
+	.a-image:hover .btn-delete{display:block;}
+	.a-image .btn-delete:hover{background-color: #F78254;}
 	.a-image .btn-add{position: absolute;
 height: 100%;background: #CACACA;
 width: 100%;
@@ -305,7 +305,7 @@ color: #979797;}
 .list-el-s1{height: 100%;background: #ECECEC;}
 
 .el-s1{display: block;
-padding: 8px 10px;
+padding: .5em 1em;
 cursor: pointer;
 height: 53px;
 position: relative;
@@ -320,12 +320,13 @@ border-bottom: 1px solid #DFDFDF;}
 .el-s1:hover{background: #F2F2F2;}
 .el-s1 b{color:#323232}
 .el-s1.active{font-weight:bold;color:#fff;background:#666}
-	.el-s1 .el-name{font-family: 'Open Sans', sans-serif;font-weight: bold;}
-	.el-s1 .el-desc{font-size: 12px;color: #6C6C6C;}
+	.el-s1 .el-name{font-family: 'Open Sans', sans-serif;font-weight: normal;}
+	.el-s1 .el-desc{font-size: 12px;color: #8E8E8E;}
 		.el-s1.active .el-desc{color:#ccc}
 	.el-s1 .el-left-s{float:left;margin-right: 10px;}
 	.el-s1 .el-right-s{float:right}
-		.el-s1 .el-btn{line-height: 30px;min-width: 30px;text-align: center;}
+		.el-s1 .el-btn{line-height: 30px;min-width: 30px;text-align: center;border:none;background:transparent}
+		.el-s1.active .el-btn{color:#FFF}
 		.el-s1 .el-btn:hover{color:#F78254}
 
 .table-admin{font-size:80%;background:#fff}
@@ -480,6 +481,9 @@ background: rgba(32, 126, 17, 0.86);
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.17);
 border-radius: 5px;
 }
+
+
+body .wu-modal-window-title{font-family: 'Open Sans', sans-serif;}
 
 
 

@@ -72,6 +72,7 @@ class Image extends Eloquent
 	{
 		/* die(public_path());
 		die(public_path()); */
+		
 		if( ! Config::get('wucms::gallery.thumb_enable')) return $this->src;		
 		
 		$root = public_path()?:$_SERVER['DOCUMENT_ROOT'];

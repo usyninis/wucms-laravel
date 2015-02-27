@@ -39,9 +39,9 @@ $(document).on("click",".js-confirm-ajax",function( e ){
 
 });
 
-/* $(document).on('submit', '.js-delete-form', function(){
+$(document).on('submit', '.js-delete-form', function(){
     return confirm('Вы уверены?');
-}); */
+});
 
 $(document).on("change","#wu-modal-window form.js-form",function( e ){
 	$("#wu-modal-window").data('change',true);
@@ -227,11 +227,13 @@ $(document).on('change','.wu-checkbox input',function(){
 });
 //	end wu-checkbox
 	
-Wuapp.sub("images/delete",function(d){
-	$("#a-image-"+d.id).fadeOut(200);
-	Wuapp.pub('notify',d);
+Wuapp.sub("images.delete",function(d){
+	
+	if(d.status=='ok') $("#a-image-"+d.id).fadeOut(200);
+	
 });
-Wuapp.sub("images/add",function(d){
+
+Wuapp.sub("images.add",function(d){
 	//alert(d);
 	if(d.images)
 	{

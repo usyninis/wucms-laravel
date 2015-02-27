@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\View;
 
 class AppController extends Controller {
 
-	protected $layout = 'template::templates.default';
+	//protected $layout = 'template::templates.default';
 
 	public function __construct()
     {
@@ -31,8 +31,9 @@ class AppController extends Controller {
 	   //View::share('settings', Setting::All()->keyBy('code'));
     }
 	
-	public function unit()
+	public function unit($all=false)
 	{
+		
 		/*$new_page = new Page;
 
 		$new_page->code = 'contacts';
@@ -60,10 +61,17 @@ class AppController extends Controller {
 		if(!$code)
 		{
 			$unit = Unit::whereMain(1)->active()->firstOrFail();
+			
+			
+			
 		}
 		else
 		{
-			$unit = Unit::whereCode($code)->active()->firstOrFail();
+			
+			$unit = Unit::where('code','=',$code)->active()->firstOrFail();
+			
+			//die($code);
+			
 		}
 		
 		
@@ -104,10 +112,13 @@ class AppController extends Controller {
 
 		
 		$view =  'template::units.'.$unit->code;			
-		if( ! View::exists($view))		
+		
+		if( ! View::exists($view)) 
 			$view = 'template::templates.'.$unit->templateCode;
 			
-		return View::make($view);
+		$this->layout = View::make($view);
+			
+		
 			
 			
 			
@@ -123,7 +134,7 @@ class AppController extends Controller {
 		if( ! View::exists($view)) 
 			$view = 'usyninis::errors.develop';
 			
-		return View::make($view);
+		$this->layout = View::make($view);
 	}
 
 

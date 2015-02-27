@@ -2,6 +2,6 @@
 	<div class=" js-wu-modal" data-code="image" data-id="{{ $image->id }}">
 	{{ HTML::image($image->src,$image->name) }}
 	</div>
-	<div class="delete js-ajax" data-id="{{ $image->id }}" data-_token="{{ csrf_token() }}" data-action="images/delete" title="Удалить изображение"><i class="fa fa-close"></i></div>
 	
+	{{ Form::delete('admin/images/'.$image->id,'<i class="fa fa-close"></i>',['class'=>'js-form','data-pubs'=>'images.delete notify'],['class'=>'btn-delete']) }}
 </div>

@@ -1,51 +1,100 @@
-@if($group = Group::find(Input::get('id')))
-@foreach(Unit::map() as $level => $level_units)
-
-									
-	@foreach($level_units as $parent_id => $units)
-	<?php
-		$class = ( ! $parent_id? '' : 'hide' );
-		if($active_id = Input::get('id'))
-		{
-			$class = ( array_key_exists($active_id,(array)$units) ? '' : 'hide' ); 
-		}
-	?>
-		<div id="level-{{ $level }}-unit-{{ $parent_id }}" class="{{ $class }}">
-		@if($parent = Unit::find($parent_id))
-		<a class="unit active js-show" data-show="#level-{{ $level-1 }}-unit-{{ Unit::find($parent_id)->parent_id }}" data-hide="#level-{{ $level }}-unit-{{ $parent_id }}"><i class="fa fa-chevron-left"></i> {{ $parent->name }}</a>
-		@else
-		<div class="section-help">Выберите страницу из списка</div>
-		@endif
-		<div class="js-sortable" style="padding:.5em 0">
-		@foreach($units as $unit)
-		<?php if(Input::get('hideId')==$unit->id) continue;?>
-		<div class="dsfd group">
-		
-		<a id="unit-{{ $unit->id }}" data-id="{{ $unit->id }}" class="unit js-show" data-hide="#level-{{ $level }}-unit-{{ $parent_id }}" data-show="#level-{{ $level+1 }}-unit-{{ $unit->id }}">
-<button class="btn btn-small js-ajax js-wu-modal-close" data-action="groups/add_unit" data-pub="reload" data-group-id="{{ $group->id }}" data-unit-id="{{ $unit->id }}" type="button"><i class="fa fa-check"></i></button>
-			{{ $unit->name }} {{ Form::hidden('units[]',$unit->id) }}
-										<div class="right"><i class="fa fa-chevron-right"></i></div>
-		</a>
-		
-		</div>
-		@endforeach
-		</div>
-		</div>
-	@endforeach
+<?php
 	
-@endforeach
+	$group = Group::find(Input::get('id'));
+	$group_units = $group->units->lists('id');
+	//$unit = Unit::find(Input::get('id'));
+	
+	$list_unit = Unit::find(Input::get('list_id'));
+
+	//$active_id = Input::get('activeId');//?:$unit->parent_id;
+	
+	if($list_unit) 
+	{
+		
+		$active_name = ' в раздел «'.$list_unit->name.'»';
+		
+	}
+	else
+	{	
+		
+		//$active_unit = false;
+		$active_name = 'на верхний уровень';
+		
+	}
+	
+	//$active_list = Unit::whereParentId($active_id)->get(); */
+	
+	
+	
+?>
+
+
+<meta name="wu-modal-title" content="Список страниц группы">
+<meta name="wu-modal-width" content="400">
+	
+<div class="sdfdsdf unit-d-units-list units-row">
+
+@if($list_unit)
+	<div class="units-row" style="margin-bottom: .8em;
+padding-bottom: .8em;
+border-bottom: 1px solid #D5D5D5;">
+	
+		<a class="unit js-wu-modal" data-code="group_list" data-id="{{ $group->id }}" data-list_id="{{ $list_unit->parent_id }}" style="float:left;width:60px;text-align:center;margin-right:10px;">
+			<div class="u-name" style="line-height:200%"> <i class="fa fa-chevron-left"></i></div>
+		</a>
+		<a class="unit active" >
+			
+			<div class="u-name">{{ $list_unit->name }}</div>
+			<div class="u-url">{{ $list_unit->url }}</div>
+		</a>
+	</div>
 @endif
 
-<style>
 
+
+@if($units = Unit::whereParentId((int)Input::get('list_id'))->get())
+
+	@if($units->count())
+	 
+		@foreach($units as $sunit)
+					
+			<div class="unit">
+			<a href="{{ url('admin/ajax/groups/toggle_unit') }}" onclick="$(this).toggleClass('btn-orange');" data-pub="reload group:unit.toggle" style="float:left;margin-right:1em;padding: .5em 1em;" data-group_id="{{ $group->id }}" data-unit_id="{{ $sunit->id }}" class="btn btn-unit-status {{ in_array($sunit->id,$group_units) ? '' : 'btn-orange' }} small js-ajax">
+				<span class="status-u-a">Добавить</span><span class="status-u-d">Добавлен</span>
+			</a>
+			<div class="js-wu-modal" data-code="group_list" data-id="{{ $group->id }}" data-list_id="{{ $sunit->id }}">
+				<div class="u-name">{{ $sunit->name }}</div>
+				<div class="u-url">{{ $sunit->url }}</div>
+			</div>	
+			</div>
+			
+		@endforeach
+
+	@else
+
+		@include('wucms::ui.empty')	
+
+	@endif
+
+@endif
+
+	
+
+</div>
+
+<button type="button" class="btn small js-wu-modal-close">Закрыть</button>
+
+<style>
+.sdfdsdf{min-height:400px;background:#e7e7e7;padding:1em}
+.sdfdsdf .unit{cursor:pointer}
 .dsfd{position:relative;}
 .dsfd .unit{padding-left:54px;cursor:pointer}
-.dsfd .btn{display: block;
-float: left;position:absolute;left:0;top:0;
-height: 34px;
-line-height: 34px;
-padding: 0;
-width: 34px;}
+.sdfdsdf .unit .btn-unit-status .status-u-a{display:none}
+.sdfdsdf .unit .btn-unit-status .status-u-d{display:inline}
+.sdfdsdf .unit .btn-unit-status.btn-orange .status-u-a{display:inline}
+.sdfdsdf .unit .btn-unit-status.btn-orange .status-u-d{display:none}
+
 
 .dsfd .btn:hover{background:#E2612E;color:#fff}
 </style>
+

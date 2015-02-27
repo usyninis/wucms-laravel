@@ -287,6 +287,58 @@ class AjaxController extends Controller {
 		return Response::json(['status'=>'error']);
 	}
 	
+	public function anyGroups($action)
+	{
+		$json = ['status'=>'error'];
+		switch($action)
+		{
+			case 'toggle_unit':
+				
+				/* if($unit = Unit::find(Input::get('unit_id')))
+				{
+					$json = ['status'=>'ok','message'=>'Страница перемещена'];
+				}
+				else
+				{
+					$json = ['status'=>'error','message'=>'Ошибка перемещения'];
+				}
+				 */
+				if($group = Group::find(Input::get('group_id')))
+				{
+					$unit = Unit::find(Input::get('unit_id'));
+					
+					//print_r($group->units->lists('id'));
+					
+					
+					
+					
+					if($group->units->contains($unit->id))
+					{
+						$group->units()->detach($unit->id);
+					}
+					else
+					{
+						$group->units()->save($unit);
+						
+					}
+					 
+					
+					$json = ['status'=>'ok'];
+					
+				}
+				else
+				{
+					$json = ['status'=>'error','message'=>'Ошибка'];
+				}
+				
+				break;
+			default:
+				$json['message'] = 'Неизвестное действие';
+				break;
+		}
+		return Response::json($json);
+	}
+	
 	
 	/*public function anyProps($action)
 	{

@@ -73,7 +73,7 @@ class Setting extends Eloquent
 	*/
 	public static function value($code)
 	{
-		$settings = Cache::remember('settings', 5, function () {
+		$settings = Cache::remember('settings', 60, function () {
 			return Setting::all();
 		});
 		if( ! $settings) return false;

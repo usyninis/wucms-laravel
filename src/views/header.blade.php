@@ -47,8 +47,8 @@
 	<link rel="stylesheet" href="{{ url('packages/usyninis/wucms/admin/css/font-awesome-4.2.0/css/font-awesome.min.css') }}">
 	
 	<!-- icons -->
-	<link rel="icon" href="{{ url('admin/favicon.ico') }}" type="image/x-icon">
-	<link rel="shortcut icon" href="{{ url('admin/favicon.ico') }}">	
+	<link rel="icon" href="{{ url('packages/usyninis/wucms/admin/favicon.ico') }}" type="image/x-icon">
+	<link rel="shortcut icon" href="{{ url('packages/usyninis/wucms/admin/favicon.ico') }}">	
 	
 	
 	

@@ -43,7 +43,10 @@ class WucmsServiceProvider extends ServiceProvider {
 	 
 	public function boot()
 	{
+		
 		$this->package('usyninis/wucms','wucms');
+		
+		$this->commands('Usyninis\Wucms\InstallCommand');
 		
 		include __DIR__.'/../../filters.php';		
 		include __DIR__.'/../../routes.php';

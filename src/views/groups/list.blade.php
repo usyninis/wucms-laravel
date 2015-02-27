@@ -21,7 +21,7 @@ Wuapp.sub('document:ready',function(){
 
 });
 
-Wuapp.sub('delGroupUnit',function(d){
+Wuapp.sub('group:unit.delete',function(d){
 	if(d.id)
 	$("#unit-"+d.id).fadeOut(200,function(){
 		$(this).remove();
@@ -42,17 +42,18 @@ Wuapp.sub('delGroupUnit',function(d){
 		
 			<div class="header-s1 group">
 				<h3 class="h-title left">Группы страниц</h3>
-				<button type="button" class="btn btn-add js-wu-modal right" data-width="300" data-code="group"><i class="fa fa-plus fa-lq"></i> Добавить группу</button>
+				<button type="button" class="btn btn-add js-wu-modal right" data-width="300" data-code="group"><i class="fa fa-plus fa-lq"></i></button>
 			</div>
-		
+			<div id="list-groups" class="js-ajax-section">
 			@forelse($groups as $group)
 			
 				<a class="el-s1{{ object_get($active_group,'id')==$group->id?' active':'' }}" href="{{ route('admin.groups.show',$group->id) }}">
 					<div class="el-right-s">	
-						<div class="el-btn js-confirm-ajax" title="Удалить группу" data-action="groups/delete" data-pub="notify reload" data-id="{{ $group->id }}"><i class="fa fa-trash-o"></i></div>
+					{{ Form::delete(null,'<i class="fa fa-trash-o"></i>',['route'=>['admin.groups.destroy',$group->id]],['class'=>'el-btn']) }}
+						
 					</div>
 					<div class="el-name">{{ $group->name }}</div>
-					<div class="el-desc"></div>
+					<div class="el-desc">{{ $group->id }} : {{ $group->code }}</div>
 				</a>
 
 			@empty
@@ -63,7 +64,7 @@ Wuapp.sub('delGroupUnit',function(d){
 				</div>	
 			
 			@endforelse	
-			
+			</div>
 		</div>
 		@if($active_group)
 		<div class="unit-50 h-h100" style="background:#f7f7f7;">
@@ -74,53 +75,59 @@ Wuapp.sub('delGroupUnit',function(d){
 					'class' 	=> 'js-form unit-d-units-list end forms',
 					'method'	=> 'put'
 				)) }}
-			<div id="form-group-in" class="js-ajax-section">
-			<div class="header-s2 group">
-				
-				<div class="right">
-					<span class="btn-single">
-						<button class="btn js-wu-modal" type="button" data-code="group" data-id="{{ $group->id }}"><i class="fa fa-pencil"></i></button>
-					</span>
-					<span class="btn-single">
-						<button class="btn js-wu-modal" type="button" data-code="group_list" data-id="{{ $group->id }}"><i class="fa fa-plus"></i> Добавить страницы</button>
-					</span>
-				</div>
-				<h1 class="h-title">{{ $active_group->name }}</h1>
-				
-			</div>
-			<div class="sort-by-sort">
-			<div class="js-sortable unit-d-units-list">
-				
-				
-					
-					
-					@forelse($active_group->units as $unit)
-						<div id="unit-{{ $unit->id }}" class="unit">
-						{{ Form::hidden('units[]',$unit->id) }}
-						<a class="btn right btn-outline js-pub" data-pub="delGroupUnit" data-id="{{ $unit->id }}"><i class="fa fa-close"></i></a>
-							<span class="u-sort ui-sortable-handle" title="Изменить порядок страниц"><i class="fa fa-ellipsis-v"></i></span>
-							<span class="u-name">{{ $unit->name }}</span>
-							<span class="u-url">{{ $unit->url }}</span>
-							
-						</div>
-					@empty
-					
-						@include('wucms::ui.empty',['text'=>'В группу не добавлены страницы'])
-						
-					@endforelse
-				
-				
+			{{ Form::hidden('group_id',$active_group->id) }}
 			
-			</div>
-			</div>
-			</div>
+				<div class="header-s2 group">
+					
+					<div class="right">
+						<span class="btn-single">
+							<button class="btn js-wu-modal" type="button" data-code="group" data-id="{{ $active_group->id }}" title="Редактировать группу"><i class="fa fa-pencil"></i></button>
+						</span>
+						<span class="btn-single">
+							<button class="btn js-wu-modal" type="button" data-code="group_list" data-id="{{ $active_group->id }}"><i class="fa fa-plus"></i> Добавить страницы</button>
+						</span>
+					</div>
+					<h1 id="group-title" class="h-title js-ajax-section">{{ $active_group->name }}</h1>
+					
+				</div>
+				<div class="sort-by-sort">
+				<div class="js-sortable unit-d-units-list">
+					<div id="list-group-units" class="js-ajax-section">
+					
+						
+						
+						@forelse($active_group->units as $unit)
+							<div id="unit-{{ $unit->id }}" class="unit">
+							{{ Form::hidden('units[]',$unit->id) }}
+							<a class="btn right js-pub" data-pub="group:unit.delete" data-id="{{ $unit->id }}"><i class="fa fa-close"></i></a>
+								<span class="u-sort ui-sortable-handle" title="Изменить порядок страниц"><i class="fa fa-ellipsis-v"></i></span>
+								<span class="u-name">{{ $unit->name }}</span>
+								<span class="u-url">{{ $unit->url }}</span>
+								
+							</div>
+						@empty
+						
+							@include('wucms::ui.empty',['text'=>'В группу не добавлены страницы'])
+							
+						@endforelse
+					</div>
+					
+				
+				</div>
+				</div>
+			
 			{{ Form::close() }}
 		</div>
 		@endif
 	</div>
 </div>
 
-
+<script>
+Wuapp.sub('groups/toggle_unit',function(d){
+	//Wuapp.pub('reload');
+	
+});
+</script>
 
 @stop
 

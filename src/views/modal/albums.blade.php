@@ -11,6 +11,8 @@
 		$album = Album::find($album_id);
 	}
 	
+	
+	
 ?>
 <style>
 .gallery-photo.in-modal{}
@@ -31,7 +33,7 @@
 </nav>
 </div>
 <div class="unit-80">
-@if($images = GImage::whereAlbumId($album_id)->orderBy('id','DESC')->get())
+@if($images = Image::whereAlbumId($album_id)->orderBy('id','DESC')->get())
 
 	
 	

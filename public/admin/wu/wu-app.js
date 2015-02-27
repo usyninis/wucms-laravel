@@ -1,25 +1,3 @@
-
-	
-// Super-basic example:
-/* $.ajaxSetup({
-  url: "/ajax/",
-  //global: false,
-  dataType: "json"
-}); */
-
-/* var au	= "/mmtools/ajax/",
-	al	= {},
-	debug = true;
-
-var	aa	= "action",
-	pa	= "pub",
-	pd	= "pub-data";
-
-var	afc = "js__form",
-	aec = "js__ajax",
-	apc	= "js__pub",
-	alc = "load";
- */
 (function(__global){
     if (!__global.console || (__global.console && !__global.console.log)) {
          __global.console = {
@@ -46,6 +24,8 @@ var Wuapp = {
 			e.preventDefault();
 			$(this).data('href',$(this).prop('href'));			
 			Wuapp.ajax($(this).data());
+			
+			
 		});
 		$(document).on("click",".js-pub",function(e){
 			e.preventDefault();
@@ -68,7 +48,8 @@ var Wuapp = {
 	},
 	ajax: function(o){		
 		var _ = this,
-			pubs = '';				
+			pubs = '';	
+		//console.log(o);			
 		if( ! o.action && ! o.href) return false;
 		if(o.action)
 		{
@@ -93,7 +74,7 @@ var Wuapp = {
 			delete o['pubs'];
 		}
 		
-	
+		
 		
 		delete o['action']; 
 		delete o['href']; 
@@ -182,8 +163,8 @@ var Wuapp = {
 			var $o = $("#wu-modal-overlay"); 
 			var $d = $("#wu-modal-window");
 			
-			var w = o.width || 'auto';
-			$d.removeClass('w-open').width(w).html('').data('code',o.code);			
+			var w = o.width || 'auto';			
+			$d.hide().removeClass('w-open').width(w).html('').data('code',o.code);			
 			$o.addClass(Wuapp.props.ajaxLoadClass).addClass('w-open').show();	
 			$d.show();	
 			$("body").addClass('w-open');
@@ -198,13 +179,16 @@ var Wuapp = {
 						if(Wuapp.props.debug) console.error('wulib: error '+n);
 						return false;
 					},
-					success: function(data){			
+					success: function(data){
+						
 						Wuapp.pub('modal:show:'+o.code,o);
 						$o.removeClass(Wuapp.props.ajaxLoadClass);
-										
+						
 						$d.html('<div class="wu-modal-window-content">'+data+'</div>').
 							prepend('<div class="wu-modal-window-close js-wu-modal-close" title="Закрыть окно"><i class="fa fa-close"></i></div>');
-						if(o.title)	$d.prepend('<div class="wu-modal-window-title">'+o.title+'</div>');
+						var t = $('meta[name=wu-modal-title]').prop("content");
+						if(w = $('meta[name=wu-modal-width]').prop("content")) $d.width(w);
+						if(t)	$d.prepend('<div class="wu-modal-window-title">'+t+'</div>');
 						//$o;
 						$d.addClass('w-open');
 						
@@ -261,78 +245,4 @@ var Wuapp = {
 		}
 	}
 };
-
-
-/* (function( $ ) {
-
-	
-
-	$.fn.wuModal = function( options ) {
-
-		var template = "<div id=\"wu-modal-overlay\" class=\"wu-modal-overlay js-wu-modal-close\"><div id=\"wu-modal-window\" class=\"wu-modal-window\"></div></div>";
-	
-		var settings = $.extend( {
-			//'template'         : 'top',
-			'background-color' : 'blue'
-		}, options);
-		
-		
-
-	};
-	
-	$.fn.wuModal = function( method ) {
-    
-		// логика вызова метода
-		if ( methods[method] ) {
-		  return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-		} else if ( typeof method === 'object' || ! method ) {
-		  return methods.init.apply( this, arguments );
-		} else {
-		  $.error( 'Метод с именем ' +  method + ' не существует для jQuery.tooltip' );
-		} 
-	};
-  
-})(jQuery); */
-	
-/* $(document).on("click","."+aec,function(e){
-	e.preventDefault();
-	var a = $(this).data('action');
-	var d = $(this).data('send-data');
-	var m = $(this).data('send-method');		
-	//var url = _.ajax_url+_.ajax_prfx+_.ajax_key+'='+a;
-	
-	if(al[a]) 
-	{
-		if(debug) console.log('wulib: ajax-'+a+' on process');	
-		return false;
-	}
-	if(debug) console.time('wulib: ajax-'+a);
-	al[a] = true;
-	var type = 'get'; if(m=='post') type = m;	
-	//if(!t) t = "json";
-	$.ajax({
-		type: type,
-		data: d,
-		url: au,
-		//dataType:"json",
-		complete: function(){			
-			al[a] = false;
-		},
-		error: function(data){
-			if(debug) console.error('wulib: error ajax "'+a+'"');
-			$.pub(a,data);
-		},
-		success: function(data, textStatus){			
-			if(debug) console.timeEnd('wulib: ajax-'+a+' textStatus:'+textStatus);	
-			$.pub(a,data);
-		} 
-	});
-});
-
-$(document).on("click","."+apc,function( e ){
-	e.preventDefault();
-	$.pub($(this).data('pub'), $(this).data(pd));
-}); */
-
-
 

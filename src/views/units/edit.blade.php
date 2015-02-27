@@ -6,10 +6,10 @@
 @if($unit->id)
 
 {{ Form::model($unit, array(
-	'route' => array('admin.units.update',$unit->id),
-	'data-pubs'=>'notify',
-	'class' => 'js-form forms form-unit-edit',
-	'method'=>'PUT'
+	'route'		=> array('admin.units.update',$unit->id),
+	'data-pubs'	=> 'notify',
+	'class'		=> 'js-form forms form-unit-edit',
+	'method'	=> 'PUT'
 )) }}	
 <div class="form-unit-edit-s1">
 
@@ -49,20 +49,20 @@
 		<div class="nano-content">	
 			<div class="units-row end">
 				<div class="unit-50">
-					<label>{{ trans('unit.fields.code') }}: {{ Form::text('code',null,array('class' => 'width-100')) }}</label>
-					<label>{{ trans('unit.fields.type') }}: {{ Form::wuSelector('type_id',Type::lists('name','id'),$unit->type_id) }}</label>
+					<label>{{ trans('wucms::unit.fields.code') }}: {{ Form::text('code',null,array('class' => 'width-100')) }}</label>
+					<label>{{ trans('wucms::unit.fields.type') }}: {{ Form::wuSelector('type_id',Type::lists('name','id'),$unit->type_id) }}</label>
 					<?php /*
 					<label>type{{ Form::select('type_id', $types, $unit->type_id,array('class' => 'width-100')) }}</label>
 					*/ 
   
 					?>
 					
-					<label>{{ trans('unit.fields.template_id') }}: {{ Form::wuSelector('template_id',Template::All()->keyBy('id')->toArray(),$unit->template_id,array('class' => 'width-100')) }}</label>
+					<label>{{ trans('wucms::unit.fields.template_id') }}: {{ Form::wuSelector('template_id',Template::All()->keyBy('id')->toArray(),$unit->template_id,array('class' => 'width-100')) }}</label>
 					
 					
-					<?php /*<label>{{ trans('unit.fields.parent_id') }} {{ Form::parent_unit($unit->parent_id,$unit->id) }}</label> */ ?>
+					<?php /*<label>{{ trans('wucms::unit.fields.parent_id') }} {{ Form::parent_unit($unit->parent_id,$unit->id) }}</label> */ ?>
 					
-					<label>{{ trans('unit.fields.children_type') }} {{ Form::wuSelector('children_type_id',Type::lists('name','id'),$unit->children_type_id) }}</label>
+					<label>{{ trans('wucms::unit.fields.children_type') }} {{ Form::wuSelector('children_type_id',Type::lists('name','id'),$unit->children_type_id) }}</label>
 				</div>
 				<div class="unit-50">
 				<div style="margin-left:2em">
@@ -72,7 +72,7 @@
 						<li class="end"><label>Главная страница {{ Form::wuCheckbox('main',1,$unit->main) }}</label></li>
 					</ul>
 					<label>
-					{{ trans('unit.fields.public_date') }}
+					{{ trans('wucms::unit.fields.public_date') }}
 					{{ Form::text('public_date',( ((int)$unit->public_date) ? date('d.m.Y',strtotime($unit->public_date)) : '' ),['class'=>'js-datepicker']) }}
 					</label>
 					Группы
@@ -81,11 +81,16 @@
 						<label>{{ Form::checkbox('groups[]',$group->id,in_array($group->id,$unit->groups()->lists('id'))) }} {{ $group->name }} </label>
 					@endforeach
 					</div>
+					
+					<?php 
+						$pids = DB::table('units_childrens')->whereChildrenId($unit->id)->lists('unit_id');
+						print_r($pids);
+					?>
 				</div>
 				</div>
 			</div>
 			<?php // <label>parent{{ Form::parent_unit($unit->parent_id,$unit->id) }}</label> ?>
-			<h3 class="groups-title"><span>{{ trans('unit.fields.images') }}</span></h3>
+			<h3 class="groups-title"><span>{{ trans('wucms::unit.fields.images') }}</span></h3>
 			<div id="unit-images-list" class="group js-sortable-image">
 						
 			@foreach($unit->images as $uimage)
@@ -102,8 +107,8 @@
 		<div id="tab-2" class="js-tab-content{{ Session::get('ui.uet')==2? '' : ' hide' }}">
 		<div class="redactor-wrap">
 		<div class="redactor-inputs">
-			<label>{{ trans('unit.fields.title') }} {{ Form::text('title',null,array('class' => 'width-100')) }}</label>
-			<label>{{ trans('unit.fields.short_content') }} {{ Form::textarea('short_content',null,array('rows'=>'4')) }}</label>
+			<label>{{ trans('wucms::unit.fields.title') }} {{ Form::text('title',null,array('class' => 'width-100')) }}</label>
+			<label>{{ trans('wucms::unit.fields.short_content') }} {{ Form::textarea('short_content',null,array('rows'=>'4')) }}</label>
 			
 		</div>
 		{{ Form::textarea('content',null,array('class'=>'js-redactor')) }}
@@ -118,9 +123,9 @@
 			
 		
 		
-			<label>{{ trans('unit.fields.meta_title') }} {{ Form::text('meta_title',null,array('class' => 'width-100')) }}</label>
-			<label>{{ trans('unit.fields.meta_keywords') }}{{ Form::text('meta_keywords',null,array('class' => 'width-100')) }}</label>
-			<label>{{ trans('unit.fields.meta_description') }}{{ Form::textarea('meta_description',null,array('rows'=>5,'class' => 'width-100')) }}</label>
+			<label>{{ trans('wucms::unit.fields.meta_title') }} {{ Form::text('meta_title',null,array('class' => 'width-100')) }}</label>
+			<label>{{ trans('wucms::unit.fields.meta_keywords') }}{{ Form::text('meta_keywords',null,array('class' => 'width-100')) }}</label>
+			<label>{{ trans('wucms::unit.fields.meta_description') }}{{ Form::textarea('meta_description',null,array('rows'=>5,'class' => 'width-100')) }}</label>
 		</div>
 		
 		</div>
