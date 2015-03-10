@@ -58,11 +58,47 @@ Wuapp.sub('selector:paste',function(d){
 			.find('.sel-item').html(d.name);
 	}
 });
-Wuapp.sub("settings/delete",function(d){
-	Wuapp.pub("notify",d);
-	if(d.status=='ok') window.location.reload();
+
+/* -------------- 
+
+units
+
+-------------- */
+
+Wuapp.sub('units.putImgToRedactor',function(img){
+
+	tinyMCE.activeEditor.focus();         
+	var el = tinyMCE.activeEditor.dom.create('img', {src : img.src, 'alt': img.name});  
+	tinyMCE.activeEditor.selection.setNode(el); 
+	Wuapp.modal.close();
 });
-Wuapp.sub("cloneProp",function(d){
+
+Wuapp.sub('units.setImage',function(img){
+
+
+
+	
+	//console.log(img);
+	if(img.changeId) $img = $("#a-image-"+img.changeId);
+	else 
+	{
+		if($("#a-image-"+img.id).length)
+		{
+			Wuapp.pub('notify',{status:'error',message:'Изображение уже добавлено'});
+			return false;
+		}
+		$("#unit-images-list .a-image:last").before('<div id="a-image-'+img.id+'" class="a-image"><div class="btn-delete" title="Удалить изображение"><i class="fa fa-close"></i></div><div class="js-wu-modal" data-code="albums" data-pub="unit:setImage" data-id="'+img.id+'"><img src="" /><input type="hidden" name="images[]" value="'+img.id+'" /></div></div>');
+		$img = $("#a-image-"+img.id);
+		$img.data(img);
+	}
+	$img.find("img").prop('src',img.thumb);
+	$img.find("input").val(img.id);
+	Wuapp.modal.close();
+	/* $("input[name=image_id]").val(img.id);
+	$(".unit-image img").prop('src',img.src); */
+});
+
+Wuapp.sub("units.cloneProp",function(d){
 	var prop_id = d.id;
 	var $prop = $("#prop-"+prop_id);
 	var prop_html = $prop.find(".prop-value-template").html();
@@ -70,6 +106,24 @@ Wuapp.sub("cloneProp",function(d){
 	//alert(prop_html);
 });
 
+
+/* -------------- 
+
+settings
+
+-------------- */
+
+Wuapp.sub("settings/delete",function(d){
+	Wuapp.pub("notify",d);
+	if(d.status=='ok') window.location.reload();
+});
+
+
+/* -------------- 
+
+forms
+
+-------------- */
 
 $(document).on("submit","form.js-form",function( e ){
 	e.preventDefault();	
@@ -226,10 +280,15 @@ $(document).on('change','.wu-checkbox input',function(){
 	$(this).parents('.wu-checkbox').toggleClass('checked');
 });
 //	end wu-checkbox
+
+
 	
 Wuapp.sub("images.delete",function(d){
 	
-	if(d.status=='ok') $("#a-image-"+d.id).fadeOut(200);
+	if(d.status=='ok') 
+		$("#a-image-"+d.id).fadeOut(200,function(){
+			$(this).remove();
+		});
 	
 });
 
@@ -250,26 +309,7 @@ Wuapp.sub("images.add",function(d){
 	Wuapp.pub('notify',d);
 });
 
-Wuapp.sub('unit:setImage',function(img){
 
-
-
-	
-	//console.log(img);
-	if(img.changeId) $img = $("#a-image-"+img.changeId);
-	else 
-	{
-		
-		$("#unit-images-list .a-image:last").before('<div id="a-image-'+img.id+'" class="a-image"><div class="delete" title="Удалить изображение"><i class="fa fa-close"></i></div><div class="js-wu-modal" data-code="albums" data-pub="unit:setImage" data-id="'+img.id+'"><img src="" /><input type="hidden" name="images[]" value="'+img.id+'" /></div></div>');
-		$img = $("#a-image-"+img.id);
-		$img.data(img);
-	}
-	$img.find("img").prop('src',img.thumb);
-	$img.find("input").val(img.id);
-	Wuapp.modal.close();
-	/* $("input[name=image_id]").val(img.id);
-	$(".unit-image img").prop('src',img.src); */
-});
 Wuapp.sub("notifyModal",function(d){
 	if(d.status=='ok')
 	{

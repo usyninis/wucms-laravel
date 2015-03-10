@@ -23,7 +23,8 @@ class UsersController extends Controller
 	{
 		
 		
-		return View::make('admin.users.list')
+		
+		return View::make('wucms::users.list')
 			
 			->with('users',User::all());
 	}
@@ -32,7 +33,7 @@ class UsersController extends Controller
 	{
 		$cuser = User::find($id);
 		
-		return View::make('admin.users.list')
+		return View::make('wucms::users.list')
 			
 			->with('users',User::all())
 			->with('cuser',$cuser);
@@ -43,7 +44,7 @@ class UsersController extends Controller
 		$cuser = new User;
 		
 		
-		return View::make('admin.users.list')
+		return View::make('wucms::users.list')
 			
 			->with('users',User::all())
 			->with('cuser',$cuser);

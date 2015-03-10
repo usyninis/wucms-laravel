@@ -1,6 +1,8 @@
 <?php
 
+namespace Usyninis\Wucms;
 
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
@@ -60,7 +62,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function roles()
 	{
-		return $this->belongsToMany('Role')
+		return $this->belongsToMany('Usyninis\Wucms\Role')
 			->orderBy('role_id', 'asc');
 	}
 

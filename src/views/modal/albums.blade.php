@@ -17,6 +17,7 @@
 <style>
 .gallery-photo.in-modal{}
 </style>
+<meta name="wu-modal-title" content="Добавить изображение">
 <div class="units-row end">
 
 <div class="unit-20">
@@ -39,27 +40,34 @@
 	
 	<div id="a-images-list" class="group">
 	
-		<div class="a-image ">
-			<div class="file-upload-form-fake"><div class="f-text">Загрузить фото</div></div>
+		
+	
+		<div class="a-image a-image-upload">
+			<div class="file-upload-form-fake">
+				<span class="fupf-icon"><i class="fa fa-upload"></i></span>
+				<span class="fupf-text">Загрузить фото</span>
+			</div>
 			{{ Form::open(array(
-				'route'		=> array('admin.images.store'),
+				'route'		=> 'admin.images.store',
 				'files'		=> true,
 				'class'		=> 'js-form forms js-upload-form file-upload-form',
 				'data-pubs'	=> 'notify',
+				
 				))
 			}}
-			{{ Form::hidden('album_id',object_get($album,'id')) }}
-
+				{{ Form::hidden('album_id',object_get($album,'id')) }}
+				
 				{{ Form::file('images[]',['class'=>'file-upload-input','accept'=>'image/jpeg','min'=>1,'max'=>50,'multiple'=>true]) }}
 				
 				
 
 			{{ Form::close() }}
 		</div>
+			
 		
 		@foreach($images as $image)
 		
-			<div class="a-image in-modal js-pub" data-change-id="{{ Input::get('id') }}" data-pub="{{ Input::get('pub') }}" data-id="{{ $image->id }}" data-src="{{ $image->src }}" data-thumb="{{ $image->thumb(200) }}">{{ HTML::image($image->thumb(200),$image->name) }}</div>
+			<div class="a-image js-pub" data-change-id="{{ Input::get('id') }}" data-pub="{{ Input::get('pub') }}" data-id="{{ $image->id }}" data-src="{{ $image->src }}" data-thumb="{{ $image->thumb(200) }}">{{ HTML::image($image->thumb(200),$image->name) }}</div>
 		
 		@endforeach
 	</div>

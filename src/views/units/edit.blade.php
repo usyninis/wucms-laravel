@@ -83,8 +83,8 @@
 					</div>
 					
 					<?php 
-						$pids = DB::table('units_childrens')->whereChildrenId($unit->id)->lists('unit_id');
-						print_r($pids);
+						/* $pids = DB::table('units_childrens')->whereChildrenId($unit->id)->lists('unit_id');
+						print_r($pids); */
 					?>
 				</div>
 				</div>
@@ -94,9 +94,9 @@
 			<div id="unit-images-list" class="group js-sortable-image">
 						
 			@foreach($unit->images as $uimage)
-				<div id="a-image-{{ $uimage->id }}" class="a-image"><div class="delete" title="Удалить изображение"><i class="fa fa-close"></i></div><div class="js-wu-modal" data-code="albums" data-pub="unit:setImage" data-album_id="{{ $uimage->album_id }}" data-id="{{ $uimage->id }}">{{ HTML::image($uimage->thumb(200)) }}{{ Form::hidden('images[]',$uimage->id) }}</div></div>		
+				@include('wucms::units.unit-image',['uimage'=>$uimage])		
 			@endforeach
-				<div class="a-image js-no-move"><div class="js-wu-modal btn-add" data-code="albums" data-pub="unit:setImage"><i class="fa fa-plus"></i>Добавить</div></div>
+				<div class="a-image js-no-move"><div class="js-wu-modal btn-add" data-code="albums" data-pub="units.setImage"><i class="fa fa-plus"></i>Добавить</div></div>
 			
 			</div>
 			
@@ -161,8 +161,8 @@
 			
 			
 			
-			<div id="list-unit-props" class="forms-s1">
-			<h3 class="groups-title"><span>Основные свойства</span></h3>
+			<div id="list-unit-props" class="list-unit-props">
+			<?php /* <h3 class="groups-title"><span>Основные свойства</span></h3> */ ?>
 			@foreach($props as $prop)
 				
 				@if( in_array($prop->id,$type_props) || $unit->prop($prop->code) )
@@ -189,12 +189,10 @@
 			
 			
 
-			<div class="prop-field group end">
-				<div class="prop-name">
-					&nbsp;
-				</div>
-				<div class="prop-values">
-					<button id="btn-prop-add" class="js-wu-modal btn btn-orange" data-selector="#list-no-add-props" data-show="#list-no-add-props" data-hide="#btn-prop-add" type="button"><i class="fa fa-plus"></i> Добавить свойство</button>
+			<div class="list-unit-props list-unit-props-free">
+				
+					<button id="btn-prop-add" class="btn btn-orange js-show" data-show="#list-no-add-props" data-hide="#btn-prop-add" type="button"><i class="fa fa-plus"></i> Добавить свойство</button>
+					
 					<div id="list-no-add-props" class="hide">
 					@foreach($props as $prop)
 						@if( ! in_array($prop->id,$type_props) && ! $unit->prop($prop->code) )
@@ -208,7 +206,7 @@
 						@endif
 					@endforeach
 					</div>
-				</div>
+				
 			</div>
 			
 			
@@ -259,15 +257,10 @@ function addProp()
 		Wuapp.pub('init:nanoslider');
 	});
 }
-$(function(){
+/* $(function(){
 	
-	$(document).on("click",".js-remove-prop-val",function(e){
-		$(this).parents(".prop-value").fadeOut(200).remove();
-	});
-	$(document).on("click",".a-image .delete",function(e){
-		e.stopPropagation();
-		$(this).parent().remove();
-	});
+
+
 	$( ".js-tabs" ).tabs({
 		activate: function( event, ui ){
 			//var active = $('.js-tabs').tabs('option', 'active');
@@ -275,82 +268,85 @@ $(function(){
 		}
 	});
 });
-Wuapp.sub('unit:pasteToRedactor',function(img){
+ */
 
-	tinyMCE.activeEditor.focus();         
-	var el = tinyMCE.activeEditor.dom.create('img', {src : img.src, 'alt': img.name});  
-	tinyMCE.activeEditor.selection.setNode(el); 
-	Wuapp.modal.close();
+$(document).on("click",".a-image .btn-delete",function(e){
+	e.stopPropagation();
+	$(this).parent().remove();
+});
+
+$(document).on("click",".js-remove-prop-val",function(e){
+	$(this).parents(".prop-value").fadeOut(200).remove();
 });
 
 
 tinymce.init({
 selector:".js-redactor",						// селектор
-			//language_url : '/mmtools/redactor/langs/ru.js',				// путь к переводу
-			language : "ru",											// в случае, если модуль лежит локально, то можно использовать вместо предыдущей строки
-			skin: 'light',
-			// настройки стилей, форматов
-			/*style_formats: [
-				{title: 'Заголовки', items: [
-					{title: 'Заголовок 1', block: 'h1'},
-					{title: 'Заголовок 2', block: 'h2'},
-					{title: 'Заголовок 3', block: 'h3'}
-				]},
-				{title: 'Строчные', items: [ 
-					{icon: 'bold', title: 'Полужирный', inline: 'strong'},
-					{icon: 'italic', title: 'Курсив', inline: 'em'},
-					{icon: 'strikethrough', title: 'Зачеркнутый', inline: 'span', styles: {textDecoration: 'line-through'}}
-				]},
-				{title: 'Выравнивание', items: [ 
-					{icon: 'alignleft', title: 'По левому краю', block: 'p', styles: {textAlign: 'left'}},
-					{icon: 'aligncenter', title: 'По центру', block: 'p', styles: {textAlign: 'center'}},
-					{icon: 'alignright', title: 'По правому краю', block: 'p', styles: {textAlign: 'right'}},
-					{icon: 'alignjustify', title: 'По ширине', block: 'p', styles: {textAlign: 'justify'}}
-				]}
-				
-			],*/
-			resize: false,
-			// плагины
-			plugins: [   // если нужны различные виды списков, то добавить плагин advlist (пока включается только админам)
-						 // так же админам врубается плагин "автоссылка"
-						"advlist autolink contextmenu link image lists charmap print preview hr anchor pagebreak spellchecker",
-						 "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-						 "save table directionality template paste textcolor"
-					],
+	//language_url : '/mmtools/redactor/langs/ru.js',				// путь к переводу
+	language : "ru",											// в случае, если модуль лежит локально, то можно использовать вместо предыдущей строки
+	skin: 'light',
+	// настройки стилей, форматов
+	/*style_formats: [
+		{title: 'Заголовки', items: [
+			{title: 'Заголовок 1', block: 'h1'},
+			{title: 'Заголовок 2', block: 'h2'},
+			{title: 'Заголовок 3', block: 'h3'}
+		]},
+		{title: 'Строчные', items: [ 
+			{icon: 'bold', title: 'Полужирный', inline: 'strong'},
+			{icon: 'italic', title: 'Курсив', inline: 'em'},
+			{icon: 'strikethrough', title: 'Зачеркнутый', inline: 'span', styles: {textDecoration: 'line-through'}}
+		]},
+		{title: 'Выравнивание', items: [ 
+			{icon: 'alignleft', title: 'По левому краю', block: 'p', styles: {textAlign: 'left'}},
+			{icon: 'aligncenter', title: 'По центру', block: 'p', styles: {textAlign: 'center'}},
+			{icon: 'alignright', title: 'По правому краю', block: 'p', styles: {textAlign: 'right'}},
+			{icon: 'alignjustify', title: 'По ширине', block: 'p', styles: {textAlign: 'justify'}}
+		]}
+		
+	],*/
+	resize: false,
+	// плагины
+	plugins: [   // если нужны различные виды списков, то добавить плагин advlist (пока включается только админам)
+				 // так же админам врубается плагин "автоссылка"
+				"advlist autolink contextmenu link image lists charmap print preview hr anchor pagebreak spellchecker",
+				 "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+				 "save table directionality template paste textcolor"
+			],
 
-			// отключение меню, тулбар маленький и тема
-			menubar : false,	
-			//toolbar_items_size: 'small',
-			theme : "modern",
+	// отключение меню, тулбар маленький и тема
+	menubar : false,	
+	//toolbar_items_size: 'small',
+	theme : "modern",
 
-			//body_class: "mm_redactor",
-			content_css: "{{ url('packages/usyninis/wucms/admin/kube/kube.min.css') }}, {{ url('packages/usyninis/wucms/admin/css/main.css') }}",
-			body_class: "redactor-body",
-			relative_urls : false,
-			fix_list_elements : true,  //фикс. списков к стандарту XHTML
-			
-			// тулбары и допустимые элементы для юзера
-			toolbar1 : "styleselect,|,bold,italic,|,forecolor backcolor,|,alignleft aligncenter alignright alignjustify ,|,bullist,numlist,",
-			toolbar2 : "undo,redo,|,link,unlink,|,image,wuimage,media,|,table,pastetext,charmap,|,visualblocks,code",//,preview,pagebreak		
-			// ширина и высота
-			//height: '100%',
-			// кнопки, обработчики событий 
-			setup : function(ed) {
-				
-				// событие "началось редактирование"
-				/*ed.on('change', function() { 
-					_wulib.pub('startChange');
-				});
-				*/
-				// кнопка "Добавить изображение"
-				ed.addButton('wuimage', {
-					title : 'Вставить изображение из галлереи',
-					icon : "wuimage",
-					onclick : function() {
-						Wuapp.modal.show({code:'albums',pub:'unit:pasteToRedactor'});
-					}
-				});
+	//body_class: "mm_redactor",
+	content_css: "{{ url('packages/usyninis/wucms/admin/kube/kube.min.css') }}, {{ url('packages/usyninis/wucms/admin/css/main.css') }}",
+	body_class: "redactor-body",
+	relative_urls : false,
+	fix_list_elements : true,  //фикс. списков к стандарту XHTML
+	
+	// тулбары и допустимые элементы для юзера
+	toolbar1 : "styleselect,|,bold,italic,|,forecolor backcolor,|,alignleft aligncenter alignright alignjustify ,|,bullist,numlist,",
+	toolbar2 : "undo,redo,|,link,unlink,|,image,wuimage,media,|,table,pastetext,charmap,|,visualblocks,code",//,preview,pagebreak		
+	// ширина и высота
+	//height: '100%',
+	// кнопки, обработчики событий 
+	setup : function(ed) {
+		
+		// событие "началось редактирование"
+		/*ed.on('change', function() { 
+			_wulib.pub('startChange');
+		});
+		*/
+		// кнопка "Добавить изображение"
+		ed.addButton('wuimage', {
+			title : 'Вставить изображение из галлереи',
+			icon : "wuimage",
+			onclick : function() {
+				Wuapp.modal.show({code:'albums',pub:'units.putImgToRedactor'});
 			}
+		});
+	}
 });
 </script>
 

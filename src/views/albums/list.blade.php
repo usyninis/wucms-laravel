@@ -15,39 +15,29 @@
 
 	<div class="header-s1 group">
 		<h3 class="h-title left">Альбомы</h3>
-		{{ Form::button('<i class="fa fa-plus"></i>',['id'=>'new-alb-btn','class'=>'right btn btn-add js-show','data-show'=>'#new-alb-form','data-hide'=>'#new-alb-btn']) }}
+		{{ Form::button('<i class="fa fa-plus"></i>',['class'=>'right btn btn-add js-wu-modal','data-code'=>'album']) }}
 	</div>
 	
 		
 
-		{{ Form::open(['id'=>'new-alb-form','route' => 'admin.albums.store','class'		=> 'forms hide en']) }}
-			<label>{{ Form::text('name',null,['class'=>'width-100 input-small','required'=>true]) }}</label>
-
-			{{ Form::button('Добавить',['type'=>'submit','class'=>'btn btn-orange small']) }}
-			{{ Form::button('Отмена',['class'=>'btn btn-gray small js-show','data-hide'=>'#new-alb-form','data-show'=>'#new-alb-btn']) }}
-			
-		{{ Form::close() }}
+	
 
 	
 	
 	
 
 	
-			<a class="el-s1 {{ ( ! Request::segment(3)?'active':'') }}" href="{{ route('admin.albums.index') }}">
-			<div class="el-right-s">
-				<span class="badge badge-small">{{ Image::count() }}</span>
-			</div>
-			<div class="el-name">Все фотографии</div>
+			<a class="el-s1 {{ ( ! Request::segment(3)?'active':'') }}" href="{{ route('admin.albums.index') }}">				
+				<div class="el-name">Все фотографии</div>
+				<div class="el-desc">{{ Image::count() }} фото</div>
 			</a>
 
 		@foreach($albums as $salbum)
 			
 			<a class="el-s1 {{ ($salbum->id==Request::segment(3)?'active':'') }}" href="{{ url('admin/albums/'.$salbum->id) }}">
-			<div class="el-right-s">
-				<span class="badge badge-small">{{ $salbum->count }}</span>
-			</div>
+			
 				<div class="el-name">{{ $salbum->name }}</div>
-				<div class="el-description">{{ $salbum->description }}</div>
+				<div class="el-desc">{{ $salbum->count }} фото</div>
 				
 			</a>
 

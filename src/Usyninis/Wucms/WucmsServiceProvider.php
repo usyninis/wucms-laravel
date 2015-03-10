@@ -31,7 +31,7 @@ class WucmsServiceProvider extends ServiceProvider {
         'Type'		=> 'Usyninis\Wucms\Type',
         'Unit'		=> 'Usyninis\Wucms\Unit',
         'UnitProp'	=> 'Usyninis\Wucms\UnitProp',
-        //'User'		=> 'Usyninis\Wucms\User',
+        'User'		=> 'Usyninis\Wucms\User',
     ];
 		
 	/**

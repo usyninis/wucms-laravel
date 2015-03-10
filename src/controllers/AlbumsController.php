@@ -61,10 +61,27 @@ class AlbumsController extends Controller {
 	 */
 	public function store()
 	{
+		$json = [];
+		
+		$validator = Validator::make(Input::all(),Album::rules());
+				
+		if ($validator->fails()) 
+		{
+			$json['status'] = 'error';
+			$json['message'] = $validator->messages()->first();
+			return Response::json($json);
+		}
+		
 		$album = new Album;
-		$album->name = Input::get('name');
+		$album->fill(Input::all());
 		$album->save();
-		return Redirect::back();
+		
+		$json['status'] = 'ok';
+		$json['message'] = 'Альбом добавлен';
+		$json['reload'] = route('admin.albums.show',$album->id);
+		
+		
+		return Response::json($json);
 	}
 
 
@@ -102,13 +119,27 @@ class AlbumsController extends Controller {
 	 */
 	public function update($id)
 	{	
-	
-		$album = Album::find($id);
-		$album->name = Input::get('name');
-		$album->save();
-		return Response::json(['status'=>'ok','message'=>'Альбом обновлен']);
-	
+		$json = [];
+		
+		$validator = Validator::make(Input::all(),Album::rules());
 				
+		if ($validator->fails()) 
+		{
+			$json['status'] = 'error';
+			$json['message'] = $validator->messages()->first();
+			return Response::json($json);
+		}
+		
+		$album = Album::find($id);
+		$album->fill(Input::all());
+		$album->save();
+		
+		$json['status'] = 'ok';
+		$json['message'] = 'Альбом обновлен';
+		
+		
+		return Response::json($json);
+			
 		
 	}
 
@@ -121,7 +152,25 @@ class AlbumsController extends Controller {
 	 */
 	public function destroy($id)
 	{
+		$json = [];
 		
+		if($album = Album::find($id))
+		{
+			Image::whereAlbumId($id)->update(['album_id'=>0]);
+			$album->delete();
+			
+			$json['status'] = 'ok';
+			$json['message'] = 'Альбом удален';
+			$json['reload'] = route('admin.albums.index');
+			
+		}
+		else
+		{
+			$json['status'] = 'error';
+			$json['message'] = 'Альбом не найден';
+		}		
+		
+		return Response::json($json);
 	}
 
 

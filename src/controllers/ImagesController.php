@@ -168,19 +168,23 @@ class ImagesController extends Controller {
 		if($image = Image::find($id))
 		{
 			
-			if (File::exists(public_path().$image->src)) File::delete(public_path().$image->src);
+			if (File::exists(public_path().$image->src)) 
+				File::delete(public_path().$image->src);
+				
 			$json['status'] = 'ok';
 			$json['id'] = $image->id;
 			$json['message'] = 'Изображение удалено';
 			$album_id = $image->album_id;					
 			$image->delete();
 			
-			if($album_id) Album::find($album_id)->save();					
+			if($album_id) 
+				Album::find($album_id)->save();					
 		}
 		else
 		{
 			$json['status'] = 'error';
 			$json['message'] = 'Ошибка удаления';
+			$json['id'] = $id;
 		}
 		return Response::json($json);
 	}

@@ -1,14 +1,16 @@
 
 @if($image = Image::find(Input::get('id')))
 
+	<meta name="wu-modal-title" content="Редактирование изображения">
+	
 	{{ Form::model($image,array(
 		'route' => array('admin.images.update',$image->id),		
 		
-		'class'		=> 'js-form forms',
+		'class'		=> 'js-form forms end',
 		'data-pubs'	=> 'notifyModal',
 		'method'	=> 'PUT'
 	)) }}
-	<div class="units-row">
+	<div class="units-row end">
 		
 		<div class="unit-50">
 		{{ HTML::image($image->thumb(400),$image->name,['style'=>'max-width:100%;max-height:300px']) }}
@@ -16,14 +18,22 @@
 		</div>
 		
 		<div class="unit-50">
+			<label>
+			{{ trans('wucms::image.fields.name') }}
 			{{ Form::text('name',null,['class'=>'width-100']) }}
-			<br/>
+			</label>
+			<label>
+			{{ trans('wucms::image.fields.album_id') }}
 			{{ Form::wuSelector('album_id',Album::all()->lists('name','id'),$image->album_id,['class'=>'width-100']) }}
-			<br/>
-			{{ Form::textarea('description',null,['class'=>'width-100']) }}
-			<br/>
+			</label>
+			<label>
+			{{ trans('wucms::image.fields.description') }}
+			{{ Form::textarea('description',null,['class'=>'width-100','rows'=>4]) }}
+			</label>
+			
 			{{ Form::button('Сохранить',['class'=>'btn btn-orange','type'=>'submit']) }}
-			<br/>
+			{{ Form::button('Отмена',['class'=>'btn js-wu-modal-close']) }}
+			
 			
 		</div>	
 	</div>

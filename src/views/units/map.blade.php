@@ -245,7 +245,7 @@ border-radius: 2px;}
 				
 				{{-- <span class="u-icon" style="background:#{{ $unit->type_id*111 }}"></span> --}}
 				<a href="{{ URL::to('admin/units/'.$cunit->id.'?parent_id='.($cunit->parent_id?:'home')) }}">
-				<span class="u-name">{{ $cunit->name }} {{ $cunit->count?'<span class="badge badge-small">'.$cunit->count.'</span>':'' }}</span>
+				<span class="u-name">{{ $cunit->name }} {{ $cunit->count?'['.$cunit->count.']':'' }}</span>
 				<span class="u-url">{{ $cunit->url }}</span>
 				</a>
 				{{ Form::hidden('units[]',$cunit->id) }}

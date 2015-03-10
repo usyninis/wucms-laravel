@@ -119,7 +119,7 @@ Form::macro('prop', function($prop, $unit_props=array())
 	$html = '<div class="prop-field group">';
 	$html .= '<div class="prop-name">';
 	$html .= $prop->name;
-	if($prop->multiple) $html .= '<i class="fa fa-plus js-pub right" title="Добавить значение свойства" data-pub="cloneProp" data-id="'.$prop->id.'"></i>';
+	if($prop->multiple) $html .= '<i class="fa fa-plus js-pub right" title="Добавить значение свойства" data-pub="units.cloneProp" data-id="'.$prop->id.'"></i>';
 	if($prop->description) $html .= '<i class="fa fa-question-circle right" title="'.$prop->description.'"></i>';
 	$html .= '</div>';
 	$html .= '<div class="prop-values'.($prop->multiple? ' js-sortable-props' : '').'">';
