@@ -245,7 +245,7 @@ border-radius: 2px;}
 				
 				{{-- <span class="u-icon" style="background:#{{ $unit->type_id*111 }}"></span> --}}
 				<a href="{{ URL::to('admin/units/'.$cunit->id.'?parent_id='.($cunit->parent_id?:'home')) }}">
-				<span class="u-name">{{ $cunit->name }} {{ $cunit->count?'['.$cunit->count.']':'' }}</span>
+				<span class="u-name">{{ $cunit->name }}</span>
 				<span class="u-url">{{ $cunit->url }}</span>
 				</a>
 				{{ Form::hidden('units[]',$cunit->id) }}
@@ -254,7 +254,7 @@ border-radius: 2px;}
 					
 						
 				<a class="u-move js-wu-modal" data-code="units2" data-width="400" data-id="{{ $cunit->id }}" data-list-id="{{ $cunit->parent_id }}" title="Переместить страницу"> <i class="fa fa-share"></i></a>
-				<a class="u-down" href="{{ URL::to('admin/units/'.$cunit->id) }}"><span class="hide">{{ $cunit->count }}</span> <i class="fa fa-angle-right"></i></a>
+				<a class="u-down" href="{{ URL::to('admin/units/'.$cunit->id) }}"><span class="">{{ $cunit->count ?: '<i class="fa fa-angle-right"></i>' }}</span> </a>
 					
 			
 			</div>

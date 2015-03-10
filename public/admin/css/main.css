@@ -385,7 +385,17 @@ font-weight: bold;}
 .unit-d-units-list .unit .u-date-m{font-size:12px}
 .unit-d-units-list .unit .u-name{display: block;font-size: 16px;font-family: 'Open Sans', sans-serif;}
 
-.unit-d-units-list .unit .u-down{display: block;position: absolute;right: 0;top: 0;font-size: 20px;line-height: 48px;width: 48px;text-align: center;background: rgba(0, 0, 0, 0.03);}
+.unit-d-units-list .unit .u-down{display: block;
+position: absolute;
+right: 0;
+color: #737373;
+top: 0;
+font-size: 17px;
+line-height: 48px;
+width: 48px;
+text-align: center;
+background: rgba(0, 0, 0, 0.03);
+font-family: 'Open Sans', sans-serif;}
 	.unit-d-units-list .unit .u-down:hover{background:rgba(5, 5, 5, 0.06)}
 .unit-d-units-list .unit .u-move{position: absolute;right: 48px;top: 0;font-size: 14px;display:none;line-height: 48px;width: 48px;text-align: center;cursor: pointer;}
 	.unit-d-units-list .unit:hover .u-move{display:block}
