@@ -13,17 +13,20 @@
 Form::macro('delete',function($url, $button_label='Delete',$form_parameters = array(),$button_options=array())
 {
 
-    if(empty($form_parameters)){
+    if(empty($form_parameters))
+	{
         $form_parameters = array(
             'method'=> 'DELETE',
             //'class' => 'js-delete-form',
             'url'   => $url
         );
-    }else{
+    }
+	else
+	{
         $form_parameters['url'] = $url;
         $form_parameters['class'] = 'js-delete-form end '.array_get($form_parameters,'class');
         $form_parameters['method'] = 'DELETE';
-    };
+    }
 	
 	$button_options['type'] = 'submit';
 	

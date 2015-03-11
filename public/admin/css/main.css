@@ -191,9 +191,13 @@ background: rgba(0, 0, 0, 0.04);}
 .file-upload-form-fake{position: absolute;top: 0;width: 100%;height: 120px;color: #6C6C6C;padding: 20px;}
 	.file-upload-form-fake .fupf-icon{display: block;line-height: 40px;font-size: 2.5em;}
 	.file-upload-form-fake .fupf-text{display: block;line-height: 20px;}
+	.file-upload-form-fake .fa-upload{display:block}
+	.file-upload-form-fake .fa-spinner{display:none}
+	.file-upload-form-fake.load .fa-upload{display:none}
+	.file-upload-form-fake.load .fa-spinner{display:block}
 .a-image-upload:hover .file-upload-form-fake{color:#333}
 .file-upload-form{position: absolute;top: 0;width:100%;height: 120px;}
-	.file-upload-form.load{background-image:url(http://www.mmenu.com/img/css/loading_32x32.gif)}
+	
 .file-upload-input{cursor: pointer;
 height: 120px;
 line-height: 120px;

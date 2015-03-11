@@ -9,6 +9,7 @@ Wuapp.init();
 
 
 $(document).on("change","form.js-upload-form",function( e ){
+	$(".file-upload-form-fake").addClass("load");
 	$(this).submit().html($(this).html());
 	
 });
@@ -39,9 +40,7 @@ $(document).on("click",".js-confirm-ajax",function( e ){
 
 });
 
-$(document).on('submit', '.js-delete-form', function(){
-    return confirm('Вы уверены?');
-});
+
 
 $(document).on("change","#wu-modal-window form.js-form",function( e ){
 	$("#wu-modal-window").data('change',true);
@@ -126,8 +125,10 @@ forms
 -------------- */
 
 $(document).on("submit","form.js-form",function( e ){
+	
 	e.preventDefault();	
 	var $form = $(this), a, url;
+	if($form.data('confirm'))  if( ! confirm($form.data('confirm'))) return false;
 	var alc = Wuapp.props.ajaxLoadClass;
 	var aak = Wuapp.props.ajaxActionKey;
 	if($form.data(alc)) return false;		
@@ -307,8 +308,14 @@ Wuapp.sub("images.add",function(d){
 		$("#a-images-list").find(".a-image.hide").fadeIn(200);
 	}
 	Wuapp.pub('notify',d);
+	$(".file-upload-form-fake").removeClass("load");
+	
 });
 
+Wuapp.sub("images.addModal",function(d){
+	$("#wu-modal-window").data('change',false);
+	//Wuapp.modal.show({code:'albums'});
+});
 
 Wuapp.sub("notifyModal",function(d){
 	if(d.status=='ok')

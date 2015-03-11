@@ -44,14 +44,17 @@
 	
 		<div class="a-image a-image-upload">
 			<div class="file-upload-form-fake">
-				<span class="fupf-icon"><i class="fa fa-upload"></i></span>
+				<span class="fupf-icon">
+					<i class="fa fa-upload"></i>
+					<i class="fa fa-spinner fa-spin"></i>
+				</span>
 				<span class="fupf-text">Загрузить фото</span>
 			</div>
 			{{ Form::open(array(
 				'route'		=> 'admin.images.store',
 				'files'		=> true,
 				'class'		=> 'js-form forms js-upload-form file-upload-form',
-				'data-pubs'	=> 'notify',
+				'data-pubs'	=> 'images.addModal notify',
 				
 				))
 			}}

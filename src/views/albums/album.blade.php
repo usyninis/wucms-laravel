@@ -29,7 +29,10 @@
 	
 	<div class="a-image a-image-upload js-no-move">
 		<div class="file-upload-form-fake">
-			<span class="fupf-icon"><i class="fa fa-upload"></i></span>
+			<span class="fupf-icon">
+				<i class="fa fa-upload"></i>
+				<i class="fa fa-spinner fa-spin"></i>
+			</span>
 			<span class="fupf-text">Загрузить фото</span>
 		</div>
 		{{ Form::open(array(
