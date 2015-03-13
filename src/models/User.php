@@ -48,7 +48,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 	public function setPasswordAttribute($value)
 	{		 
-		$this->attributes['password'] = Hash::make($value);
+		$this->attributes['password'] = \Hash::make($value);
 	}
 
 	/* public function toArray()
@@ -65,8 +65,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('Usyninis\Wucms\Role')
 			->orderBy('role_id', 'asc');
 	}
-
-	public function isAdmin()
+	
+	public function isRole($role)
+	{
+		
+		if($this->roles)
+			foreach($this->roles as $user_role)
+				if($user_role->role==$role) return true;
+				
+		return false;
+	}
+	
+	/* public function isAdmin()
 	{
 		$_admin_role_id = 1;
 		$_admin_role_name = 'admin';
@@ -74,6 +84,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			foreach($this->roles as $role)
 				if($role->role==$_admin_role_name&&$role->id==$_admin_role_id) return true;
 		return false;
-	}
+	} */
 
+	
 }

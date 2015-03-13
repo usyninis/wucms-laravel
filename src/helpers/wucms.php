@@ -6,19 +6,13 @@ function print_array($var)
 }
 
 
-function access($key)
+function access($roles)
 {
-	switch($key)
-	{
-		case 'admin': 
-			if( ! Auth::check()) return false;
-			if(Auth::user()->isAdmin()) return true;
-			break;			
-		case 'dev': 
-			if( ! Auth::check()) return false;
-			if(Auth::user()->id==1) return true;
-			break;			
-	}
+	
+	if( ! Auth::check()) return false;
+	$roles = array($roles);
+	foreach($roles as $role_code)
+		if(Auth::user()->isRole($role_code)) return true;
 	return false;
 }
 

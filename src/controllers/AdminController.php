@@ -4,8 +4,8 @@ class AdminController extends BaseController {
 
 	public function __construct()
     {
-        $this->beforeFilter('auth');
-        $this->beforeFilter('admin');
+        $this->beforeFilter('admin.auth');
+        //$this->beforeFilter('admin');
        // $this->beforeFilter('csrf');
 	   
     }

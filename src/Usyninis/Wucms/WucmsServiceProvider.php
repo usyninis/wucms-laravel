@@ -52,6 +52,8 @@ class WucmsServiceProvider extends ServiceProvider {
 		include __DIR__.'/../../routes.php';
 		include __DIR__.'/../../errors.php';
 		
+		$this->app['config']['auth'] =  \Config::get('wucms::auth');
+		
 		include __DIR__.'/../../macros/form.php';
 		include __DIR__.'/../../macros/html.php';
 		

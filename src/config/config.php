@@ -2,8 +2,18 @@
 
 return array(
 
+	'app_enable'	=> true,
 	'app_code'		=> 'demo',
-	'site_enable'	=> true,
+	'admin_url'		=> 'admin',
+	
+	
+	'auth'			=> array(
+	
+		'driver'	=> 'eloquent',
+		'model'		=> 'Usyninis\Wucms\User',
+		'table'		=> 'users'
+	
+	),
 	
 	'gallery'		=> array(
 	

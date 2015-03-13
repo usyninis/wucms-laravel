@@ -35,9 +35,17 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
+
+Route::filter('admin.guest', function()
 {
-	if (Auth::guest())
+	if ( Auth::check())
+		return Redirect::route('index');
+});
+
+Route::filter('admin.auth', function()
+{
+	
+	if ( ! Auth::check())
 	{
 		if (Request::ajax())
 		{
@@ -50,32 +58,28 @@ Route::filter('auth', function()
 	}
 });
 
-Route::filter('admin', function()
+/* Route::filter('admin.role', function($route, $request, $value)
 {
-	if (!Auth::user()->isAdmin())
+	if ( ! User::isRole($value))
 	{
 		if (Request::ajax())
 		{
-			return Response::make('No admin', 401);
+			return Response::make('No set role '.$value, 401);
 		}
 		else
 		{
-			return Redirect::route('admin.login.form'); 
+			return Redirect::route('index'); 
 		}
 		
 	}
-});
+}) */;
 
 
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
-});
 
-Route::filter('develop', function()
+Route::filter('admin.develop', function()
 {	
 	
-	if( ! Config::get('wucms::site_enable'))
+	if( ! Config::get('wucms::app_enable'))
 	{
 		if( ! Session::get('test') && ! Input::get('test')) return Redirect::route('develop');
 
@@ -83,21 +87,6 @@ Route::filter('develop', function()
 	}
 });
 
-/*
-|--------------------------------------------------------------------------
-| Guest Filter
-|--------------------------------------------------------------------------
-|
-| The "guest" filter is the counterpart of the authentication filters as
-| it simply checks that the current user is not logged in. A redirect
-| response will be issued if they are, which you may freely change.
-|
-*/
-
-Route::filter('guest', function()
-{
-	// if (Auth::check()) return Redirect::route('profile');
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -110,7 +99,7 @@ Route::filter('guest', function()
 |
 */
 
-Route::filter('csrf', function()
+Route::filter('admin.csrf', function()
 {	
 	if (Session::token() !== Input::get('_token'))
 	{

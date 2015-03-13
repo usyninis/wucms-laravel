@@ -23,10 +23,51 @@ Route::pattern('id', '[0-9]+');
 
 //print_array(Setting::all());
 
+Route::get('admin/login', array(
+	'as'		=> 'admin.login.form',
+	'before'	=> 'admin.guest',
+	function()
+	{
+		return View::make('wucms::login');
+	}
+));
+
+Route::post('admin/login',[
+	//'as'		=> 'admin.login',
+	'before'	=> 'admin.guest',
+	function(){
+		$user = array(
+			'email' => Input::get('email'),
+			'password' => Input::get('password')
+		);
+		//print_r($user);        die();
+		
+		if (Auth::attempt($user,true)) 
+		{
+			return Redirect::route('admin.units.index');
+				//->with('flash_notice', 'You are successfully logged in.');
+		}
+		
+		// authentication failure! lets go back to the login page
+		return Redirect::route('admin.login.form')
+			->with('flash_error', 'Your email/password combination was incorrect.')
+			->withInput();
+	}
+]);
+
+Route::get('admin/logout', array(
+	'as'		=> 'admin.logout',
+	function()
+	{
+		if(Auth::check()) Auth::logout();
+		return Redirect::back();
+	}
+));
+
 Route::group(
 	array(
 		'prefix' => 'admin',
-		'before' => 'auth|admin'
+		'before' => 'admin.auth'
 	), 
 	function() 
 	{
@@ -46,6 +87,11 @@ Route::group(
 		
 		
 		
+
+		
+
+		
+
 		
 		//Route::post('map','UnitsController@saveMap');
 	}
@@ -55,54 +101,6 @@ Route::group(
 
 //return Response::error( '503' );
 
-
-Route::group(
-	array(
-		'prefix' => 'users'
-	), 
-	function()
-	{
-		Route::get('/login', [
-			'as'		=> 'admin.login.form',
-			'before'	=> 'guest',
-			function(){
-				return View::make('wucms::login');
-			}
-		]);
-
-		Route::post('/login',[
-			'before'	=> 'guest',
-			function(){
-				$user = array(
-		            'email' => Input::get('email'),
-		            'password' => Input::get('password')
-		        );
-		        //print_r($user);        die();
-		        
-		        if (Auth::attempt($user,true)) 
-		        {
-		            return Redirect::route('admin.units.index');
-		                //->with('flash_notice', 'You are successfully logged in.');
-		        }
-		        
-		        // authentication failure! lets go back to the login page
-		        return Redirect::route('admin.login.form')
-		            ->with('flash_error', 'Your email/password combination was incorrect.')
-		            ->withInput();
-			}
-		]);
-
-	
-		
-		Route::get('/logout', array(
-			'as'		=> 'logout',
-			function(){
-				if(Auth::check()) Auth::logout();
-				return Redirect::back();
-			}
-		));	
-	}
-);
 
 
 
@@ -119,7 +117,7 @@ Route::get('develop', array(
 
 Route::get('/', array(
 	'as'		=> 'index',
-	'before'	=> 'develop',
+	'before'	=> 'admin.develop',
 	'uses'		=> 'Usyninis\Wucms\AppController@unit'
  	/* function()
 	{
@@ -133,7 +131,7 @@ Route::get('/', array(
 
 Route::get('{all}', array(
 	'as'		=> 'unit',
-	'before'	=> 'develop',
+	'before'	=> 'admin.develop',
 	'uses'		=> 'Usyninis\Wucms\AppController@unit'
 	// function()
 	// {

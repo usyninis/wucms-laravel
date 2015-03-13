@@ -1,5 +1,5 @@
+
 @if(Auth::check())
-@if(Auth::user()->isAdmin())
 
 <style>
 body{padding-left:58px !important}
@@ -75,21 +75,27 @@ bottom: 15px;}
 <a class="<?php if(Request::is('admin/units*') || Request::is('admin/types*') || Request::is('admin/groups*') || Request::is('admin/props*') || Request::is('admin/templates*')) echo 'active';?>" href="{{ URL::to('admin/units'.(Session::has('lastUnitId')?'/'.Session::get('lastUnitId'):'')) }}" title="Содержимое"><i class="fa fa-list-alt"></i></a>
 
 <a class="<?php if(Request::is('admin/albums*')) echo 'active';?>" href="{{ URL::to('admin/albums') }}" title="Изображения"><i class="fa fa-image"></i></a>
+@if(access('superadmin'))
 <a class="<?php if(Request::is('admin/users*')) echo 'active';?>" href="{{ URL::to('admin/users') }}" title="Пользователи"><i class="fa fa-user"></i></a>
+@endif
 <a class="<?php if(Request::is('admin/settings*')) echo 'active';?>" href="{{ url('admin/settings') }}"><i class="fa fa-cog"></i></a>
 
 <a class="last-b b-user" onclick="$('#dfsds').toggleClass('show');$(this).toggleClass('active')"><img src="http://www.mmenu.com/img/mm/choke_user_50x50.jpg" /></a>
-@if(access('dev'))
+@if(Auth::user()->id==1)
 <a class="last-b" onclick="$('#dfsd').toggle();$(this).toggleClass('active')" style="bottom:58px;" href="#"><i class="fa fa-bug"></i></a>
 @endif
 </div>
 <div id="dfsds" class="admin-user-panel">
 	<div class="a-u-name">{{ Auth::user()->name }}</div>
+	Выши права:<br/>
+	@foreach(Auth::user()->roles as $role)
+		{{ $role->role }}<br/>
+	@endforeach
 	<nav class="nav nav-stacked">
     <ul>
 		<li><a href="{{ URL::route('admin.users.show',Auth::user()->id) }}">Личные данные</a></li>
 		<li><a href="{{ URL::route('admin.users.show',Auth::user()->id) }}">Сменить пароль</a></li>
-		<li><a href="{{ URL::route('logout') }}">Выход</a></li>
+		<li><a href="{{ URL::route('admin.logout') }}">Выход</a></li>
 	</ul>
 	</nav>
 	
@@ -105,5 +111,4 @@ bottom: 15px;}
 	@if(in_array(Route::currentRouteName(),['index','unit']))
 		@include('wucms::ui.unit-edit')
 	@endif
-@endif
 @endif

@@ -1,5 +1,4 @@
 @if(Auth::check())
-@if(Auth::user()->isAdmin())
 <style>
 .admin-panel-2{position: fixed;
 left: 58px;
@@ -54,5 +53,4 @@ font-size: 26px;}
 	@endforeach
 
 </div>
-@endif
 @endif
