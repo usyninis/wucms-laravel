@@ -3,6 +3,7 @@
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
+
 class WucmsServiceProvider extends ServiceProvider {
 
 
@@ -32,6 +33,8 @@ class WucmsServiceProvider extends ServiceProvider {
         'Unit'		=> 'Usyninis\Wucms\Unit',
         'UnitProp'	=> 'Usyninis\Wucms\UnitProp',
         'User'		=> 'Usyninis\Wucms\User',
+		
+        'Wucms'		=> 'Usyninis\Wucms\WucmsServiceProvider',
     ];
 		
 	/**
@@ -47,9 +50,11 @@ class WucmsServiceProvider extends ServiceProvider {
 		$this->package('usyninis/wucms','wucms');
 		
 		$this->commands('Usyninis\Wucms\InstallCommand');
+		$this->commands('Usyninis\Wucms\UpdateCommand');
 		
 		include __DIR__.'/../../filters.php';		
-		include __DIR__.'/../../routes.php';
+		
+		
 		include __DIR__.'/../../errors.php';
 		
 		$this->app['config']['auth'] =  \Config::get('wucms::auth');
@@ -59,7 +64,7 @@ class WucmsServiceProvider extends ServiceProvider {
 		
 		include __DIR__.'/../../helpers/wucms.php';
 		
-		
+		\View::addNamespace('template', app_path().'/views/'.\Config::get('wucms::app_code'));
 		
 		
 	}
@@ -74,6 +79,15 @@ class WucmsServiceProvider extends ServiceProvider {
 		
 		AliasLoader::getInstance($this->facades);
 		
+		
+		
+		/* Route::get('{all?}/{code?}', function()
+		{
+			
+			return 'dfs';
+			
+		}); */
+		
 	}
 
 	/**
@@ -84,6 +98,38 @@ class WucmsServiceProvider extends ServiceProvider {
 	public function provides()
 	{
 		return array();
+	}
+
+	public static function adminRoutes()
+	{
+		
+		include __DIR__.'/../../routes.php';
+		
+	}
+	
+	public static function appRoutes()
+	{
+		\Route::get('/',[
+			'as'		=> 'index',
+			'before'	=> 'develop',
+			'uses'		=> 'Usyninis\Wucms\AppController@index'	
+		]);
+
+
+
+		\Route::get('{code}',[
+			'as'		=> 'unit',
+			'before'	=> 'develop',
+			'uses'		=> 'Usyninis\Wucms\AppController@unit'	
+		]);
+
+
+
+		\Route::get('{any?}/{code}',[
+			'as'		=> 'unit',
+			'before'	=> 'develop',
+			'uses'		=> 'Usyninis\Wucms\AppController@unit'	
+		]); 
 	}
 
 }

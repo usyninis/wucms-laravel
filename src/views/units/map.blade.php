@@ -237,7 +237,9 @@ border-radius: 2px;}
 		@foreach($units as $cunit)
 			<div class="unit{{ $cunit->active? '' : ' noactive' }}{{ ( ! empty($unit) && $unit->id==$cunit->id )? ' active' : '' }}" data-sort="{{ $cunit->sort }}" data-public_date="{{ strtotime($cunit->public_date)?:strtotime($cunit->created_at) }}">
 				
-				<span class="u-sort ui-sortable-handle" title="Изменить порядок страниц"><i class="fa fa-ellipsis-v"></i></span>
+				<span class="u-sort ui-sortable-handle" title="Изменить порядок страниц">
+					{{ $cunit->main ? '<i class="fa fa-star"></i>' : '<i class="fa fa-ellipsis-v"></i>' }}
+				</span>
 				<span class="u-date" title="Дата публикации">
 					<span class="u-date-d">{{ date('d M',strtotime($cunit->public_date)) }}</span>
 					<span class="u-date-m">{{ date('Y',strtotime($cunit->public_date)) }}</span>
@@ -250,10 +252,15 @@ border-radius: 2px;}
 				</a>
 				{{ Form::hidden('units[]',$cunit->id) }}
 			
-					
+				<a class="u-move" href="#" data-tools="dropdown" data-target="#dropdown-{{ $cunit->id }}"></a>
+<ul id="dropdown-{{ $cunit->id }}" class="dropdown">
+    <li><a href="#">...</a></li>
+</ul>
 					
 						
-				<a class="u-move js-wu-modal" data-code="units2" data-width="400" data-id="{{ $cunit->id }}" data-list-id="{{ $cunit->parent_id }}" title="Переместить страницу"> <i class="fa fa-share"></i></a>
+				<?php 
+				/* <a class="u-move js-wu-modal" data-code="units2" data-width="400" data-id="{{ $cunit->id }}" data-list-id="{{ $cunit->parent_id }}" title="Переместить страницу"> <i class="fa fa-share"></i></a>
+				*/ ?>
 				<a class="u-down" href="{{ URL::to('admin/units/'.$cunit->id) }}"><span class="">{{ $cunit->count ?: '<i class="fa fa-angle-right"></i>' }}</span> </a>
 					
 			

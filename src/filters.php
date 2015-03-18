@@ -76,16 +76,23 @@ Route::filter('admin.auth', function()
 
 
 
-Route::filter('admin.develop', function()
+Route::filter('develop', function()
 {	
 	
 	if( ! Config::get('wucms::app_enable'))
 	{
-		if( ! Session::get('test') && ! Input::get('test')) return Redirect::route('develop');
-
+		if( ! Session::get('test') && ! Input::get('test')) 
+		{	
+			$view = 'template::errors.develop';
+			
+			if( ! View::exists($view)) $view = 'wucms::errors.develop';
+			
+			return Response::view($view, [], 503);
+		}
 		Session::put('test','Y');
 	}
 });
+
 
 
 /*

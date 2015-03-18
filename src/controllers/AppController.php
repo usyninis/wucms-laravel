@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\View;
 class AppController extends Controller {
 
 	//protected $layout = 'template::templates.default';
+	
+	protected $unit = null;
 
 	public function __construct()
     {
@@ -31,9 +33,52 @@ class AppController extends Controller {
 	   //View::share('settings', Setting::All()->keyBy('code'));
     }
 	
-	public function unit($all=false)
+	public function index()
 	{
 		
+		$this->unit = Unit::whereMain(1)->active()->firstOrFail();
+		
+		$this->ckeckUrl();
+		
+		$this->setTemplate();
+		//View::share('unit', $unit);
+		
+	}
+	
+	
+	public function unit()
+	{
+		$id = \Route::input('id');
+		
+		
+		$code = \Route::input('code');		
+		
+		/* $segments = Request::segments();
+		
+		//$props = (object) Prop::lists('value','code');		
+		
+		$code = end($segments); */
+		
+		$this->unit = $id ? Unit::whereId($id)->active()->firstOrFail() : Unit::whereCode($code)->active()->firstOrFail();		
+	
+		$this->ckeckUrl();
+		
+		$this->setTemplate();
+	
+	}
+	
+	
+	public function unitByCode($code)
+	{
+	
+		$this->unit = Unit::where('code','=',$code)->active()->firstOrFail();
+	
+	}
+	
+	
+	public function unitById($id)
+	{
+		$this->unit = Unit::where('id','=',$id)->active()->firstOrFail();
 		/*$new_page = new Page;
 
 		$new_page->code = 'contacts';
@@ -125,6 +170,25 @@ class AppController extends Controller {
 
 	}
 
+	public function ckeckUrl()
+	{
+		$need_url = $this->unit->url;
+		
+		$check_url = Request::path();
+	}
+
+	public function setTemplate()
+	{
+		View::share('unit', $this->unit);
+		
+		$view =  'template::units.'.$this->unit->code;			
+		
+		if( ! View::exists($view)) 
+			$view = 'template::templates.'.$this->unit->templateCode;
+			
+		$this->layout = View::make($view);
+	}
+	
 	function develop()
 	{
 		//if(Setting::value('site_enable')) return Redirect::route('index');

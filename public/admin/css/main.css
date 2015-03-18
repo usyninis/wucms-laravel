@@ -116,7 +116,7 @@ box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
 position: relative;
 height: 100%;}
 .form-unit-edit-s1{background: #EFEFEF;}
-.form-unit-edit-s1 .s1-inner{padding: 1em 1.5em;}
+.form-unit-edit-s1 .s1-inner{padding: 10px 15px;}
 .form-unit-edit-s2{padding: 1.5em;background: #EFEFEF;position:absolute;width:100%;bottom:0}
 .form-unit-edit-inner{
 overflow: auto;padding:5px;
@@ -285,6 +285,7 @@ text-align: center;}
 	.unit:hover .u-cntrl.u-sort{display:inline-block;}
 	.unit:hover .u-cntrl.u-main{right:20px;}
 
+	.unit .fa-star{color: #FFCE32;}
 	
 .units-nav{font-size: 12px}
 .units-nav li {

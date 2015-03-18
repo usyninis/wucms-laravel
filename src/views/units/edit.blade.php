@@ -8,7 +8,7 @@
 {{ Form::model($unit, array(
 	'route'		=> array('admin.units.update',$unit->id),
 	'data-pubs'	=> 'notify',
-	'class'		=> 'js-form forms form-unit-edit',
+	'class'		=> 'js-form forms-s1 forms form-unit-edit',
 	'method'	=> 'PUT'
 )) }}	
 <div class="form-unit-edit-s1">
@@ -44,7 +44,7 @@
 	
 
 		
-		<div id="tab-1" class="nano forms-s1 js-tab-content{{ Session::get('ui.uet')==1||!Session::get('ui.uet')? '' : ' hide' }}">
+		<div id="tab-1" class="nano js-tab-content{{ Session::get('ui.uet')==1||!Session::get('ui.uet')? '' : ' hide' }}">
 		
 		<div class="nano-content">	
 			<div class="units-row end">
@@ -108,7 +108,7 @@
 		<div class="redactor-wrap">
 		<div class="redactor-inputs">
 			<label>{{ trans('wucms::unit.fields.title') }} {{ Form::text('title',null,array('class' => 'width-100')) }}</label>
-			<label>{{ trans('wucms::unit.fields.short_content') }} {{ Form::textarea('short_content',null,array('rows'=>'4')) }}</label>
+			<label>{{ trans('wucms::unit.fields.short_content') }} {{ Form::textarea('short_content',null,array('rows'=>'3')) }}</label>
 			
 		</div>
 		{{ Form::textarea('content',null,array('class'=>'js-redactor')) }}

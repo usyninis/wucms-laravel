@@ -25,10 +25,34 @@
 	//return ($old_code);
     return Response::view('template::errors.error404', array(), 404);
 	
-});
- */
+}); */
+ 
 
-App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $e)
+/* App::error(function(NotFoundHttpException $e)
+{
+	return App::make('Usyninis\Wucms\AppController')->unit();
+	
+}); */
+
+
+/*
+	
+	Для всех 404 ошибок
+	
+*/
+
+App::missing(function ($exception) {
+
+	$view = 'template::errors.404';
+	
+	if( ! View::exists($view)) $view = 'wucms::errors.404';
+	
+	return Response::view($view, [], 404);
+
+});
+
+
+/* App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $e)
 {
 	
 	
@@ -48,4 +72,4 @@ App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $e)
 	//return ($old_code);
     return Response::view('template::errors.error404', array(), 404);
 
-}); 
+}); */ 

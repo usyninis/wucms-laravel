@@ -51,42 +51,36 @@ class Unit extends Eloquent
 
 		static::creating(function($unit)
 		{
-			$unit->created_by = Auth::user()->id;
-			$unit->updated_by = Auth::user()->id;
+			if(Auth::check()) 
+			{
+				$unit->created_by = Auth::user()->id;
+				$unit->updated_by = Auth::user()->id;
+			}
 			$unit->public_date = date_sql();
 		});
 
 		static::updating(function($unit)
 		{
 			
-			$unit->updated_by = Auth::user()->id;
+			if(Auth::check()) 
+			{
+				$unit->updated_by = Auth::user()->id;
+			}
 			//die('updating');
 		});
 
 		static::saving(function($unit)
 		{			
 			
-			if($unit->id)
+
+			//if( ! $unit->code) $unit->code = URLify::filter($unit->name);
 			
-				if($unit->main) 
-				{
-					if($mains = Unit::whereMain(1)->where('id','!=',$unit->id)->get())					
-						foreach($mains as $main)
-						{
-							$main->main = 0;
-							$main->save();
-						}						
-				}
-				else 
-					if(Unit::whereMain(1)->count()==0) $unit->main = 1;					
-			
-			if( ! $unit->code) $unit->code = URLify::filter($unit->name);
+			$unit->url = $unit->code;
 			$unit->level = 1;
-			$unit->url = '/';
+			
 			
 			DB::table('units_childrens')->where('children_id','=',$unit->id)->delete();
 			
-			if( ! $unit->main) $unit->url = $unit->url.$unit->code;
 			
 			
 				
@@ -103,13 +97,13 @@ class Unit extends Eloquent
 							));						
 			
 						$unit->level++;
-						$unit->url = '/'.$parent_unit->code.$unit->url;
+						$unit->url = $parent_unit->code.'/'.$unit->url;
 						
 					}
 					
 				}				
 				
-			
+			if($unit->main) $unit->url = '/';
 			
 			
 			//if(!empty($unit->id))
@@ -143,7 +137,7 @@ class Unit extends Eloquent
 	{
 		return array(
 			'name'		=> 'required|min:3',
-			//'code'		=> 'required|min:3|unique:units,code,'.$uid,
+			'code'		=> 'required|min:3|unique:units,code,'.$uid,
 			//'template_id'	=> 'required',
 			'type_id'	=> 'required',
 		);

@@ -80,6 +80,10 @@ class UnitsController extends Controller {
 	 */
 	public function store()
 	{
+		$new_code = URLify::filter(Input::get('name'));
+		
+		Input::merge(array('code' => $new_code));
+	
 		$validator = Validator::make(Input::all(),Unit::rules());
 		
 		$json = [];
@@ -93,14 +97,15 @@ class UnitsController extends Controller {
 		
 		$unit = new Unit;
 		$unit->name = Input::get('name');
-		$unit->code = URLify::filter(Input::get('name'));
+		$unit->code = $new_code;
 		$unit->parent_id = Input::get('parent_id');
 		$unit->type_id = Input::get('type_id');
 		$unit->level = Input::get('level');			
 		$unit->sort = Input::get('sort');			
 		$unit->active = 1;			
 		$unit->save();
-			
+		
+		if($parent = $unit->parent) $parent->recount();
 			
 		$json['status'] = 'ok';
 			$json['message'] = 'Страница добавлена';
@@ -157,8 +162,11 @@ class UnitsController extends Controller {
 	{
 		$this->beforeFilter('csrf');
 		
-		$json = array();
-		$unit = Unit::find($id);
+		$new_code = Input::get('code')?:URLify::filter(Input::get('name'));
+		
+		Input::merge(array('code' => $new_code));
+		
+		$json = [];		
 		
 		$validator = Validator::make(Input::all(),Unit::rules($id));
 		
@@ -168,9 +176,12 @@ class UnitsController extends Controller {
 			$json['message'] = $validator->messages()->first();
 			return Response::json($json);
 		}
+		
+		$unit = Unit::find($id);
 		$unit->name = Input::get('name');
 		$unit->code = Input::get('code');
-		if(Unit::whereCode($unit->code)->where('id','!=',$unit->id)->first()) $unit->code = $unit->id.'-'.$unit->code;
+		//$unit->code = Input::get('code')?:URLify::filter(Input::get('name'));
+		//if(Unit::whereCode($unit->code)->where('id','!=',$unit->id)->first()) $unit->code = $unit->code.'-'.time();
 		//$unit->parent_id = Input::get('parent_id');	
 
 		if($images = Input::get('images'))
@@ -192,7 +203,7 @@ class UnitsController extends Controller {
 		$unit->groups()->sync((array)Input::get('groups'));
 		
 		
-
+		
 		
 		$unit->template_id = Input::get('template_id');
 		$unit->type_id = Input::get('type_id');
@@ -202,44 +213,68 @@ class UnitsController extends Controller {
 		$unit->public_date = date('Y-m-d',strtotime(Input::get('public_date')));
 		$unit->title = Input::get('title');
 		$unit->active = Input::get('active');
-		$unit->main = Input::get('main');
+		$unit->main = Input::get('main');			
 		$unit->meta_title = Input::get('meta_title');
 		$unit->meta_keywords = Input::get('meta_keywords');
 		$unit->meta_description = Input::get('meta_description');
-		$unit->save();
+		$unit->save();	
+		$unit->recount();	
 		
+		/*
 		
-		$unit->recount();
+			UNIT MAIN
+			
+		*/
 		
+		if($unit->main) 
+		{
+			if($mains = Unit::whereMain(1)->where('id','!=',$unit->id)->get())					
+				foreach($mains as $main)
+				{
+					$main->main = 0;
+					$main->save();
+				}						
+		}
+		else
+		{
+			if(Unit::whereMain(1)->count()==0) 
+			{
+				$unit->main = 1;
+				$unit->save();
+			}
+		}
+		 
+		/*
+		
+			UNIT PROPS
+			
+		*/
 		
 		UnitProp::where('unit_id','=',$unit->id)->delete();
-
 		
-		
-			if($props = Input::get('props'))
+		if($props = Input::get('props'))
+		{
+			
+			foreach($props as $prop_id => $values)
 			{
-				
-				foreach($props as $prop_id => $values)
+				foreach($values as $value)
 				{
-					foreach($values as $value)
-					{
-						if(!$value) continue;
-						$prop = new UnitProp();
-						$prop->prop_id = $prop_id;
-						$prop->value_int = $value;
-						$prop->value_string = $value;
-						$prop->value_text = $value;
-						/* $prop->value = $prop_post['value'];
-						$prop->description = $prop_post['description']; */
-						$unit->props()->save($prop);
-					}
-					
-				}						
+					if(!$value) continue;
+					$prop = new UnitProp();
+					$prop->prop_id = $prop_id;
+					$prop->value_int = $value;
+					$prop->value_string = $value;
+					$prop->value_text = $value;
+					/* $prop->value = $prop_post['value'];
+					$prop->description = $prop_post['description']; */
+					$unit->props()->save($prop);
+				}
 				
-			}
+			}						
+			
+		}
 		
-		
-		
+
 		
 		//foreach()
 		//$unit->images()->attach(1);
