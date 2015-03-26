@@ -25,7 +25,8 @@ class Type extends Eloquent
 	{
 		return array(			
 			'name'	=> 'required',
-			'code'	=> 'required|unique:types,code,'.$id
+			'code'	=> 'required|unique:types,code,'.$id,
+			'template_id'	=> 'required'
 		);
 	}
 	

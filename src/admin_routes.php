@@ -15,14 +15,6 @@
 
 
 
-
-Route::pattern('id', '[0-9]+');
-Route::pattern('code', '[a-z0-9-]+');
-Route::pattern('any', '.*');
-
-
-
-
 //print_array(Setting::all());
 
 Route::get('admin/login', array(

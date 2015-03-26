@@ -10,7 +10,7 @@ function access($roles)
 {
 	
 	if( ! Auth::check()) return false;
-	$roles = array($roles);
+	$roles = (array)$roles;
 	foreach($roles as $role_code)
 		if(Auth::user()->isRole($role_code)) return true;
 	return false;

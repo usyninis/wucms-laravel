@@ -36,9 +36,12 @@ class AppController extends Controller {
 	public function index()
 	{
 		
-		$this->unit = Unit::whereMain(1)->active()->firstOrFail();
+		$this->unit = Unit::whereMain(1)->active()->first();
 		
-		$this->ckeckUrl();
+		if( ! $this->unit) App::abort(404);
+		//$this->ckeckUrl();
+		
+		if($this->unit->need_url != Request::path()) return Redirect::to($this->unit->need_url,301);
 		
 		$this->setTemplate();
 		//View::share('unit', $unit);
@@ -48,20 +51,12 @@ class AppController extends Controller {
 	
 	public function unit()
 	{
-		$id = \Route::input('id');
-		
-		
-		$code = \Route::input('code');		
-		
-		/* $segments = Request::segments();
-		
-		//$props = (object) Prop::lists('value','code');		
-		
-		$code = end($segments); */
-		
-		$this->unit = $id ? Unit::whereId($id)->active()->firstOrFail() : Unit::whereCode($code)->active()->firstOrFail();		
 	
-		$this->ckeckUrl();
+		$this->unit = Unit::whereCode(\Route::input('code'))->active()->first();		
+	
+		if( ! $this->unit) App::abort(404);
+		
+		if($this->unit->need_url != Request::path()) return Redirect::to($this->unit->need_url,301);
 		
 		$this->setTemplate();
 	
@@ -170,12 +165,12 @@ class AppController extends Controller {
 
 	}
 
-	public function ckeckUrl()
+	/* public function ckeckUrl()
 	{
 		$need_url = $this->unit->url;
 		
 		$check_url = Request::path();
-	}
+	} */
 
 	public function setTemplate()
 	{

@@ -54,7 +54,6 @@ class WucmsServiceProvider extends ServiceProvider {
 		
 		include __DIR__.'/../../filters.php';		
 		
-		
 		include __DIR__.'/../../errors.php';
 		
 		$this->app['config']['auth'] =  \Config::get('wucms::auth');
@@ -64,8 +63,7 @@ class WucmsServiceProvider extends ServiceProvider {
 		
 		include __DIR__.'/../../helpers/wucms.php';
 		
-		\View::addNamespace('template', app_path().'/views/'.\Config::get('wucms::app_code'));
-		
+		\View::addNamespace('template', app_path().'/views/'.\Config::get('wucms::app_code'));		
 		
 	}
 
@@ -98,38 +96,19 @@ class WucmsServiceProvider extends ServiceProvider {
 	public function provides()
 	{
 		return array();
-	}
+	}	
+
 
 	public static function adminRoutes()
 	{
 		
-		include __DIR__.'/../../routes.php';
+		include __DIR__.'/../../admin_routes.php';
 		
 	}
 	
 	public static function appRoutes()
 	{
-		\Route::get('/',[
-			'as'		=> 'index',
-			'before'	=> 'develop',
-			'uses'		=> 'Usyninis\Wucms\AppController@index'	
-		]);
-
-
-
-		\Route::get('{code}',[
-			'as'		=> 'unit',
-			'before'	=> 'develop',
-			'uses'		=> 'Usyninis\Wucms\AppController@unit'	
-		]);
-
-
-
-		\Route::get('{any?}/{code}',[
-			'as'		=> 'unit',
-			'before'	=> 'develop',
-			'uses'		=> 'Usyninis\Wucms\AppController@unit'	
-		]); 
+		include __DIR__.'/../../app_routes.php';
 	}
 
 }
