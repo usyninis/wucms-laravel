@@ -6,6 +6,10 @@ return array(
 	'app_code'		=> 'demo',
 	'admin_url'		=> 'admin',
 	
+	'access_panel'	=> array('superadmin','admin','manager'),
+	
+	
+	'access_debug'	=> array(1),
 	
 	'auth'			=> array(
 	

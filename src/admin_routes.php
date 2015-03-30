@@ -17,45 +17,27 @@
 
 //print_array(Setting::all());
 
+Route::get('admin', array(
+	'before'	=> 'admin.auth',
+	function(){
+		return Redirect::route('admin.units.index');
+	}
+));
 Route::get('admin/login', array(
 	'as'		=> 'admin.login.form',
 	'before'	=> 'admin.guest',
-	function()
-	{
-		return View::make('wucms::login');
-	}
+	'uses'		=> 'Usyninis\Wucms\UsersController@loginForm'
 ));
 
 Route::post('admin/login',[
-	//'as'		=> 'admin.login',
+	'as'		=> 'admin.login',
 	'before'	=> 'admin.guest',
-	function(){
-		$user = array(
-			'email' => Input::get('email'),
-			'password' => Input::get('password')
-		);
-		//print_r($user);        die();
-		
-		if (Auth::attempt($user,true)) 
-		{
-			return Redirect::route('admin.units.index');
-				//->with('flash_notice', 'You are successfully logged in.');
-		}
-		
-		// authentication failure! lets go back to the login page
-		return Redirect::route('admin.login.form')
-			->with('flash_error', 'Your email/password combination was incorrect.')
-			->withInput();
-	}
+	'uses'		=> 'Usyninis\Wucms\UsersController@login'
 ]);
 
 Route::get('admin/logout', array(
 	'as'		=> 'admin.logout',
-	function()
-	{
-		if(Auth::check()) Auth::logout();
-		return Redirect::back();
-	}
+	'uses'		=> 'Usyninis\Wucms\UsersController@logout'
 ));
 
 Route::group(

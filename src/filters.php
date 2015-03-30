@@ -39,7 +39,18 @@ App::after(function($request, $response)
 Route::filter('admin.guest', function()
 {
 	if ( Auth::check())
-		return Redirect::route('index');
+	{
+		
+		if (Request::ajax())
+		{
+			return Response::make('Forbidden', 403);
+		}
+		else
+		{
+			return Redirect::route('index');
+				//->with('flash_error', 'Your email/password combination was incorrect.');
+		}
+	}
 });
 
 Route::filter('admin.auth', function()
@@ -54,6 +65,8 @@ Route::filter('admin.auth', function()
 		else
 		{
 			return Redirect::route('admin.login.form');
+				//->with('flash_error', 'Необходимо')
+				
 		}
 	}
 });
