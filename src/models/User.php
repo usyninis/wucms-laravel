@@ -68,10 +68,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	
 	public function isRole($role)
 	{
-		
 		if($this->roles)
 			foreach($this->roles as $user_role)
-				if($user_role->role==$role) return true;
+				if( $user_role->role === $role ) return true;
 				
 		return false;
 	}

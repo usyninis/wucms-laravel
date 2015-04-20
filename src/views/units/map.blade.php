@@ -251,16 +251,16 @@ border-radius: 2px;}
 				<span class="u-url">{{ $cunit->url }}</span>
 				</a>
 				{{ Form::hidden('units[]',$cunit->id) }}
-			
+				<?php /*
 				<a class="u-move" href="#" data-tools="dropdown" data-target="#dropdown-{{ $cunit->id }}"></a>
 <ul id="dropdown-{{ $cunit->id }}" class="dropdown">
     <li><a href="#">...</a></li>
 </ul>
-					
-						
-				<?php 
-				/* <a class="u-move js-wu-modal" data-code="units2" data-width="400" data-id="{{ $cunit->id }}" data-list-id="{{ $cunit->parent_id }}" title="Переместить страницу"> <i class="fa fa-share"></i></a>
 				*/ ?>
+						
+				
+				<a class="u-move js-wu-modal" data-code="units2" data-width="400" data-id="{{ $cunit->id }}" data-list-id="{{ $cunit->parent_id }}" title="Переместить страницу"> <i class="fa fa-share"></i></a>
+				
 				<a class="u-down" href="{{ URL::to('admin/units/'.$cunit->id) }}"><span class="">{{ $cunit->count ?: '<i class="fa fa-angle-right"></i>' }}</span> </a>
 					
 			

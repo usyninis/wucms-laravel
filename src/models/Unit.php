@@ -86,7 +86,7 @@ class Unit extends Eloquent
 				
 				if($parents = $unit->parents())
 				{
-					$parents = array_reverse($parents);
+					//$parents = array_reverse($parents);
 					foreach($parents as $parent_unit)
 					{	
 						if($unit->id)			
@@ -221,7 +221,18 @@ class Unit extends Eloquent
 	}
 	
 	
-
+	public function getNeedUrlAttribute($value)
+	{		
+		
+		if($this->main) return '/';
+		
+		$parents = $this->parents();
+		if($parents->count())
+			return implode('/',$parents->lists('code')).'/'.$this->code;
+	
+		return $this->code;
+		
+	}
 	
 	public function getMetaTitleAttribute($value)
 	{		
@@ -271,23 +282,20 @@ class Unit extends Eloquent
 	
 	public function parents()
 	{
+		$parents = new \Illuminate\Database\Eloquent\Collection;
+		
 		$cunit = $this;
-		$parents = array();
+		
 		while($parent_unit = $cunit->parent)
 		{
-			if( ! $parent_unit->id) break;
-			if(array_key_exists($parent_unit->id,$parents)) break;
-			$parents[$parent_unit->id] = $parent_unit;
+			$parents->add($parent_unit);
 			
 			$cunit = $parent_unit;	
 		}
-		if( ! $parents) return false;
-		$parents = array_reverse($parents);	
+		
+		$parents->sortBy('level');
+		
 		return $parents;
-		/* return Unit::join('units_childrens', 'units.id', '=', 'units_childrens.unit_id')
-			->where('units_childrens.children_id','=',$this->id)
-			->orderBy('units_childrens.level','ASC')
-			->get(); */
 	}
 
 	public function children()

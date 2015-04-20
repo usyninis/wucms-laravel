@@ -39,7 +39,39 @@ App::after(function($request, $response)
 Route::filter('admin.guest', function()
 {
 	if ( Auth::check())
-		return Redirect::route('index');
+	{
+		
+		if (Request::ajax())
+		{
+			return Response::make('Forbidden', 403);
+		}
+		else
+		{
+			return Redirect::route('index');
+				//->with('flash_error', 'Your email/password combination was incorrect.');
+		}
+	}
+});
+
+Route::filter('admin.role', function($route, $request, $value)
+{
+	
+	//if( Auth::check()) return Redirect::route('index');
+	//die($value);
+	if (Request::ajax())
+	{
+		if( ! Auth::user()->isRole($value))
+			return Response::make('Unauthorized', 401); 
+		//return Response::make('Forbidden', 403);
+	}
+	else
+	{
+		if( ! Auth::user()->isRole($value))
+			return Response::make('Доступ Forbidden', 403);
+		//return Redirect::route('index');
+			//->with('flash_error', 'Your email/password combination was incorrect.');
+	}
+	
 });
 
 Route::filter('admin.auth', function()
@@ -54,6 +86,8 @@ Route::filter('admin.auth', function()
 		else
 		{
 			return Redirect::route('admin.login.form');
+				//->with('flash_error', 'Необходимо')
+				
 		}
 	}
 });

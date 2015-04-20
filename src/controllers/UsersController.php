@@ -4,6 +4,7 @@ namespace Usyninis\Wucms;
 
 use Illuminate\Routing\Controller;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
@@ -101,6 +102,9 @@ class UsersController extends Controller
 		$user->last_name = Input::get('last_name');
 		$user->email = Input::get('email');
 		if(Input::get('new_password')) $user->password = Input::get('new_password');
+		$user->save();
+		
+		
 		if($roles = Input::get('roles'))
 		{		
 			$user->roles()->sync($roles);
@@ -111,15 +115,92 @@ class UsersController extends Controller
 		}
 		
 		
-		$user->save();
+		
 		
 
 		
 		return Response::json($json);	
 	}
 
-	
+	public function changePassword()
+	{
+		if( ! Auth::check()) return Response::make('Unauthorized', 401);
+		
+		//$cuser = Auth::user();
+		
+		
+		$validator = Validator::make(Input::all(),array(
+			'old_password' => 'required|alphaNum|between:6,16',
+			'new_password' => 'required|alphaNum|between:6,16|confirmed'
+		));
+		
+		if($validator->passes())
+		{
 
+			$cuser = Auth::user();
+			
+			if (Hash::check(Input::get('old_password'), $cuser->password)) 
+			{
+				$cuser->password = Input::get('new_password');
+				$cuser->save();
+				
+				$json['status'] = 'ok';
+				$json['message'] = 'Пароль успешно изменен!';
+			}
+			else
+			{
+				$json['status'] = 'error';
+				$json['message'] ='Старый пароль введен неверно';	
+			}
+			
+		}
+		else
+		{
+			$json['status'] = 'error';
+			$json['message'] = $validator->messages()->first();
+		}
+		return Response::json($json);
+	}
+	
+	public function loginForm()
+	{
+		return View::make('wucms::login');
+	}
+
+	public function login()
+	{
+		$user = array(
+			'email' => Input::get('email'),
+			'password' => Input::get('password')
+		);
+		//print_r($user);        die();
+		
+		if (Auth::attempt($user,true)) 
+		{
+			return Redirect::route('index');
+				//->with('flash_notice', 'You are successfully logged in.');
+		}
+		
+		// authentication failure! lets go back to the login page
+		return Redirect::route('admin.login.form')
+			->with('flash_error', 'Your email/password combination was incorrect.')
+			->withInput();
+	}
+	
+	public function logout()
+	{
+		if(Auth::check()) Auth::logout();
+		
+		if (Request::ajax())
+		{
+			
+			return Response::json(['status'=>'ok']);
+			
+		}
+		
+		return Redirect::back();		
+		
+	}
 	
 
 

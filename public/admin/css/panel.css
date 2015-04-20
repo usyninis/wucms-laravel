@@ -1,0 +1,101 @@
+body{padding-left:58px !important}
+.ab-panel{position: fixed;
+background: #333;
+left: 0;
+top: 0;
+width: 58px;
+height: 100%;
+z-index: 100;}
+
+
+
+
+
+.ab-panel a.b-user.active{}
+.ab-panel a.b-user img{}
+
+
+.ab-sbtns{}
+.ab-sbtns.ab-sbtns_top{}
+.ab-sbtns.ab-sbtns_bottom{  position: absolute;  bottom: 0;}
+
+.ab-sbtns__btn{display: block;
+font-size: 11px;background-position:center center;background-repeat:no-repeat;
+text-transform: uppercase;
+text-decoration: none;
+text-align: center;
+color: #C0C0C0;
+font-weight: bold;
+height: 58px;
+line-height: 58px;font-size: 18px;
+width: 58px;}
+.ab-sbtns__btn:hover,
+.ab-sbtns__btn:focus,
+.ab-sbtns__btn:active{  background-color: rgba(255, 255, 255, 0.05);color: #C0C0C0;}
+
+.ab-sbtns__btn.active{background-color: #F78254;font-size: 28px;color:#fff;}
+
+.ab-sbtns__btn.ab-sbtns__btn_user{border-left:none;z-index:5;}
+.ab-sbtns__btn.ab-sbtns__btn_user img{width: 42px;
+height: 42px;
+margin: 8px 0;
+border: 1px solid #303030;
+border-radius: 5px;}
+
+.ab-query-panel__query{  padding: 4px 12px;
+background: rgba(0, 0, 0, 0.49);
+font-weight: bold;margin-bottom:1em;
+border-radius: 4px;}
+.ab-query-panel{  position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+padding: 1% 5%;
+font-size: 12px;
+background: rgba(0, 0, 0, 0.53);
+height: 100%;
+z-index: 99;
+color: #fff;
+
+}
+
+
+
+.ab-user-panel{ 
+position: fixed;
+left: -142px;
+height: 100%;
+background: rgba(64, 64, 64, 1);
+padding: .8em 1.2em;
+font-size: 12px;
+-webkit-transition: left 200ms ease, opacity 200ms ease;
+transition: left 200ms ease, opacity 200ms ease;
+z-index: 98;
+
+
+top: 0;
+width: 200px;}
+.ab-user-panel.show{left: 58px;
+width: 200px;
+}
+
+.ab-user-panel__label{  color: #C7C7C7;font-size:12px;}
+.ab-user-panel__user-name{font-size: 18px;
+margin-bottom: 1em;
+color: #FFFFFF;}
+.ab-user-panel__user-roles{margin-bottom:1.4em}
+.ab-user-panel__user-role{  color: #FFB005;  font-weight: bold;}
+.ab-user-panel__btns{position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: .8em 1.2em;}
+.ab-user-panel__btn{color: #B3B3B3;
+  text-align:center;
+  text-decoration: none;
+  padding: 4px 12px;
+  font-weight: bold;
+  border-radius: 2px;
+  display: block;margin-top:1em;
+  background: #595959;}
+.ab-user-panel__btn:hover{  color: #fff;background:#666}
