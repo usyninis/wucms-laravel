@@ -75,7 +75,7 @@ class Unit extends Eloquent
 
 			//if( ! $unit->code) $unit->code = URLify::filter($unit->name);
 			
-			$unit->url = $unit->code;
+			$unit->url = '';//$unit->code;
 			$unit->level = 1;
 			
 			
@@ -97,13 +97,13 @@ class Unit extends Eloquent
 							));						
 			
 						$unit->level++;
-						$unit->url = $parent_unit->code.'/'.$unit->url;
+						$unit->url = $unit->url.'/'.$parent_unit->code;
 						
 					}
 					
 				}				
 				
-			if($unit->main) $unit->url = '/';
+			if($unit->main) $unit->url = '/'; else  $unit->url =  $unit->url.'/'.$unit->code;
 			
 			
 			//if(!empty($unit->id))
