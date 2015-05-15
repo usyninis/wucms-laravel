@@ -164,6 +164,8 @@ class UsersController extends Controller
 	
 	public function loginForm()
 	{
+		//return Session::get('back_url');
+		//$back_url = Session::get('back_url');
 		return View::make('wucms::login');
 	}
 
@@ -177,7 +179,10 @@ class UsersController extends Controller
 		
 		if (Auth::attempt($user,true)) 
 		{
-			return Redirect::route('index');
+			
+			$back_url = Input::get('back_url') ?:  route('index');
+			
+			return Redirect::to($back_url);
 				//->with('flash_notice', 'You are successfully logged in.');
 		}
 		

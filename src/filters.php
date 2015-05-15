@@ -64,28 +64,33 @@ Route::filter('admin.auth', function()
 		}
 		else
 		{
-			return Redirect::route('admin.login.form');
-				//->with('flash_error', 'Необходимо')
+			return Redirect::route('admin.login.form')
+				->with('back_url', Request::url());
 				
 		}
 	}
 });
 
-/* Route::filter('admin.role', function($route, $request, $value)
+Route::filter('admin.role', function($route, $request, $value)
 {
-	if ( ! User::isRole($value))
+	
+	//if( Auth::check()) return Redirect::route('index');
+	//die($value);
+	if (Request::ajax())
 	{
-		if (Request::ajax())
-		{
-			return Response::make('No set role '.$value, 401);
-		}
-		else
-		{
-			return Redirect::route('index'); 
-		}
-		
+		if( ! Auth::user()->isRole($value))
+			return Response::make('Unauthorized', 401); 
+		//return Response::make('Forbidden', 403);
 	}
-}) */;
+	else
+	{
+		if( ! Auth::user()->isRole($value))
+			return Response::make('Access Forbidden', 403);
+		//return Redirect::route('index');
+			//->with('flash_error', 'Your email/password combination was incorrect.');
+	}
+	
+});
 
 
 

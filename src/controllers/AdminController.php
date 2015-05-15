@@ -10,12 +10,14 @@ class AdminController extends BaseController {
 	   
     }
 
-	public function loginForm()
+/* 	public function loginForm()
 	{
+		$back_url = Request::url();
 		
-		return View::make('admin.login');
+		return View::make('admin.login')
+			->with('back_url',$back_url);
 		
-	}
+	} */
 
 	public function login()
 	{
@@ -33,7 +35,7 @@ class AdminController extends BaseController {
         }
         
         // authentication failure! lets go back to the login page
-        return Redirect::route('loginForm')
+        return Redirect::route('admin.login.form')
             ->with('flash_error', 'Your email/password combination was incorrect.')
             ->withInput();
 		
