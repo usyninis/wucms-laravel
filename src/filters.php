@@ -1,19 +1,8 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application & Route Filters
-|--------------------------------------------------------------------------
-|
-| Below you will find the "before" and "after" events for the application
-| which may be used to do any work before or after a request into your
-| application. Here you may also register your custom route filters.
-|
-*/
-
 App::before(function($request)
 {
-		
+	
 
 	
 });
@@ -21,36 +10,44 @@ App::before(function($request)
 
 App::after(function($request, $response)
 {
-	//
-});
 
-/*
-|--------------------------------------------------------------------------
-| Authentication Filters
-|--------------------------------------------------------------------------
-|
-| The following filters are used to verify that the user of the current
-| session is logged into this application. The "basic" filter easily
-| integrates HTTP Basic authentication for quick, simple checking.
-|
-*/
+
+
+});
 
 
 Route::filter('admin.guest', function()
 {
-	if ( Auth::check())
-	{
-		
-		if (Request::ajax())
+	if(Auth::check())
+	{		
+		if(Request::ajax())
 		{
 			return Response::make('Forbidden', 403);
 		}
 		else
 		{
-			return Redirect::route('index');
-				//->with('flash_error', 'Your email/password combination was incorrect.');
+			return Redirect::route('index');				
 		}
 	}
+
+});
+
+Route::filter('admin.role', function($route, $request, $value)
+{
+	
+	if (Request::ajax())
+	{
+		if( ! Auth::user()->isRole($value))
+			return Response::make('Forbidden', 403); 
+		
+	}
+	else
+	{
+		if( ! Auth::user()->isRole($value))
+			return Response::make('Forbidden', 403);
+		
+	}	
+
 });
 
 Route::filter('admin.auth', function()
@@ -64,32 +61,10 @@ Route::filter('admin.auth', function()
 		}
 		else
 		{
-			return Redirect::route('admin.login.form')
-				->with('back_url', Request::url());
+			return Redirect::route('admin.login.form');				
 				
 		}
 	}
-});
-
-Route::filter('admin.role', function($route, $request, $value)
-{
-	
-	//if( Auth::check()) return Redirect::route('index');
-	//die($value);
-	if (Request::ajax())
-	{
-		if( ! Auth::user()->isRole($value))
-			return Response::make('Unauthorized', 401); 
-		//return Response::make('Forbidden', 403);
-	}
-	else
-	{
-		if( ! Auth::user()->isRole($value))
-			return Response::make('Access Forbidden', 403);
-		//return Redirect::route('index');
-			//->with('flash_error', 'Your email/password combination was incorrect.');
-	}
-	
 });
 
 
@@ -111,18 +86,6 @@ Route::filter('develop', function()
 	}
 });
 
-
-
-/*
-|--------------------------------------------------------------------------
-| CSRF Protection Filter
-|--------------------------------------------------------------------------
-|
-| The CSRF filter is responsible for protecting your application against
-| cross-site request forgery attacks. If this special token in a user
-| session does not match the one given in this request, we'll bail.
-|
-*/
 
 Route::filter('admin.csrf', function()
 {	
