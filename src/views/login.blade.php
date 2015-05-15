@@ -13,6 +13,7 @@
     		'class' => 'forms' 
     	)) }}
 		
+		{{ Form::hidden('back_url',Session::get('back_url')) }}
 		
     	
     	<label>
@@ -31,10 +32,9 @@
 		</label>
 		
 		
-		<div class="group">
+		
 		<input type="hidden" name="back_url" value="{{ Session::get('back_url') }}" />
 		
-		</div>
 		<div class="group">
         {{ Form::button('Вход',array(
         	'class'	=> 'btn btn-blue',

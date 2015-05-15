@@ -189,6 +189,7 @@ class UsersController extends Controller
 		// authentication failure! lets go back to the login page
 		return Redirect::route('admin.login.form')
 			->with('flash_error', 'Your email/password combination was incorrect.')
+			->with('back_url', Input::get('back_url'))
 			->withInput();
 	}
 	

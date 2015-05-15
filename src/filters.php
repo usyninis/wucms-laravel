@@ -61,7 +61,8 @@ Route::filter('admin.auth', function()
 		}
 		else
 		{
-			return Redirect::route('admin.login.form');				
+			return Redirect::route('admin.login.form')
+				->with('back_url',Request::url());				
 				
 		}
 	}
