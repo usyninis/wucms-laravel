@@ -38,13 +38,13 @@ Route::filter('admin.role', function($route, $request, $value)
 	if (Request::ajax())
 	{
 		if( ! Auth::user()->isRole($value))
-			return Response::make('Unauthorized', 401); 
+			return Response::make('Forbidden', 403); 
 		
 	}
 	else
 	{
 		if( ! Auth::user()->isRole($value))
-			return Response::make('Доступ Forbidden', 403);
+			return Response::make('Forbidden', 403);
 		
 	}	
 
