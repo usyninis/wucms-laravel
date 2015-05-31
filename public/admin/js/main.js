@@ -13,6 +13,12 @@ $(document).on("change","form.js-upload-form",function( e ){
 	$(this).submit().html($(this).html());
 	
 });
+/*  .on("submit",".js-delete-form",function( e ) {
+  	if( ! confirm('Вы действительно хотите удалить этот элемент?')) {
+  	  return false;
+  	}
+  })
+*/
 $(document).on("change","form.js-form[data-submit-onchange]",function( e ){
 	$(this).submit();
 	
@@ -224,13 +230,23 @@ Wuapp.sub("document:ready",function(d){
 	$( ".js-sortable-image" ).sortable({
 		//handle:".fa",
 		placeholder: "a-image fake",
-		items: ".a-image:not(.js-no-move)",
-		/*
+		items: ".a-image",
 		
-		connectWith: ".js-sortable",
+		
+		//connectWith: ".js-sortable",
 		update: function(event, ui){
-			ui.item.parent("form").submit();
-		} */
+			//ui.item.parent("form").submit();
+			var images = [] ;
+			$(".a-image").each(function() {
+				if($(this).data('id')) {
+				  images.push($(this).data('id'));
+				}
+			});
+			var album_id = $("#a-images-list").data('id');
+			$.post("/admin/albums/update-images/"+album_id,{images:images},function(result) {
+				Wuapp.pub("notify",result);
+			});
+		} 
 	});
 
 	$('.js-datepicker').Zebra_DatePicker({

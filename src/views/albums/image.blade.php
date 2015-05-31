@@ -3,5 +3,5 @@
 	{{ HTML::image($image->thumb(200),$image->name) }}
 	</div>
 	
-	{{ Form::delete('admin/images/'.$image->id,'<i class="fa fa-close"></i>',['class'=>'js-form','data-confirm'=>'Удалить изображение?','data-pubs'=>'images.delete notify'],['class'=>'btn-delete']) }}
+	{{ Form::delete('admin/images/'.$image->id,'<i class="fa fa-close"></i>',['data-pubs'=>'images.delete notify'],['class'=>'btn-delete']) }}
 </div>

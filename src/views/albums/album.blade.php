@@ -1,9 +1,6 @@
-<style>
-.album-wrap{padding:1em}
-.album-list-images{padding:1em;}
-</style>
 
-<div class="album-wrap">
+
+
 <div class="header-s2 group">
 @if(!empty($album))
 
@@ -11,10 +8,8 @@
 	<h2 class="h-title" style="float:left">
 		{{ $album->name }}
 	</h2>
-	<div class="right">
-		{{ Form::delete('admin/albums/'.$album->id,'<i class="fa fa-trash-o"></i>',['class'=>'js-form left','data-pubs'=>'albums.delete notify'],['class'=>'btn smaller btn-red']) }}
-		<button class="btn btn-gray smaller js-wu-modal" data-code="album" data-id="{{ $album->id }}"><i class="fa fa-pencil"></i></button>
-		
+	<div class="right">		
+		<button class="btn btn-gray smaller js-wu-modal" data-code="album" data-id="{{ $album->id }}"><i class="fa fa-pencil"></i></button>		
 	</div>
 	
 	
@@ -25,9 +20,9 @@
 @endif
 </div>
 
-<div id="a-images-list" class="js-sortable-image album-list-images">
-	
-	<div class="a-image a-image-upload js-no-move">
+<div class="album">
+<div class="album__panel">
+	<div class="file-uploader">
 		<div class="file-upload-form-fake">
 			<span class="fupf-icon">
 				<i class="fa fa-upload"></i>
@@ -50,13 +45,19 @@
 			
 
 		{{ Form::close() }}
+	
 	</div>
+</div>
+
+<div id="a-images-list" data-id="{{ $album->id or null }}" class="{{ empty($album) ? '' : 'js-sortable-image' }} album__images">
+	
+
 
 
 	
 
 @forelse($images as $image)
-
+	
 	@include('wucms::albums.image',['image'=>$image])
 	
 @empty
@@ -64,13 +65,16 @@
 	
 	
 @endforelse
-</div>
 
 <div style="clear:both">
 <?php echo $images->links(); ?>
 </div>
+</div>
+
 
 </div>
+
+
 
 
 

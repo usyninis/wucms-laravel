@@ -95,7 +95,7 @@ class AlbumsController extends Controller {
 	{			
 		return View::make('wucms::albums.list')						
 			->with('album',Album::find($id))
-			->with('images',Image::whereAlbumId($id)->paginate(50));
+			->with('images',Image::whereAlbumId($id)->orderBy('sort','asc')->paginate(50));
 	}
 
 
@@ -136,6 +136,31 @@ class AlbumsController extends Controller {
 		
 		$json['status'] = 'ok';
 		$json['message'] = 'Альбом обновлен';
+		
+		
+		return Response::json($json);
+			
+		
+	}
+
+	public function updateImages($id)
+	{	
+		$json = [];
+		
+		$album = Album::findOrFail($id);
+		
+		if($images = Input::get('images')) 
+		{
+			foreach($images as $sort => $image_id)
+			{
+				$image = Image::find($image_id);
+				$image->sort = $sort;
+				$image->save();
+			}
+		}
+		
+		$json['status'] = 'ok';
+		$json['message'] = 'Порядок обновлен';
 		
 		
 		return Response::json($json);

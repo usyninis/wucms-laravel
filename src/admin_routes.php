@@ -54,6 +54,7 @@ Route::group(
 		Route::get('types', 'UnitsController@types');
 		Route::get('settings', 'SettingsController@index');
 		//Route::get('units/types', 'UnitsController@types');
+		Route::post('albums/update-images/{id}', 'AlbumsController@updateImages');
 		Route::resource('albums', 'AlbumsController');
 		Route::resource('images', 'ImagesController');
 		Route::resource('units', 'UnitsController');

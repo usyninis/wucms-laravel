@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+use URLify;
+
 class ImagesController extends Controller {
 
 	/**
@@ -81,7 +83,7 @@ class ImagesController extends Controller {
 			if ($validator->fails()) return Response::json(['status'=>'error','message'=>$validator->messages()->first()]);				
 						
 			//$filename = date('H-i-s').'-'.URLify::filter(str_random(12), 60, "", true);
-			$filename = date('H-i-s').'-'.\URLify::filter($file->getClientOriginalName(), 60, "", true);
+			$filename = date('H-i-s').'-'.URLify::filter($file->getClientOriginalName(), 60, "", true);
 			
 			//$upload_success = true;
 			
