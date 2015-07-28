@@ -26,6 +26,8 @@ class PropsController extends Controller {
 
 	public function index()
 	{
+        $this->beforeFilter('admin.auth');
+        $this->beforeFilter('admin.role:admin');
 		
 		
 		return View::make('wucms::props.list')

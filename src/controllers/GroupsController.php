@@ -27,6 +27,8 @@ class GroupsController extends Controller {
 
 	public function __construct()
     {
+        $this->beforeFilter('admin.auth');
+        $this->beforeFilter('admin.role:admin');
     	View::share('groups',Group::all());
     	View::share('map',Unit::map());
     	

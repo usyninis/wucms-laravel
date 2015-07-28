@@ -30,6 +30,9 @@ class UnitsController extends Controller {
 
 	public function __construct()
     {
+        $this->beforeFilter('admin.auth');
+        $this->beforeFilter('admin.role:admin');
+		
     	if(Input::get('sort') && in_array(Input::get('sort'),['sort','public_date'])) 
 		Session::put('sort',Input::get('sort'));
 		

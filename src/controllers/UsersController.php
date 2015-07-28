@@ -22,6 +22,8 @@ class UsersController extends Controller
 
 	public function index()
 	{
+        $this->beforeFilter('admin.auth');
+        $this->beforeFilter('admin.role:admin');
 		
 		
 		

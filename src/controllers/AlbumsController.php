@@ -27,6 +27,8 @@ class AlbumsController extends Controller {
 
 	public function __construct()
     {
+        $this->beforeFilter('admin.auth');
+        $this->beforeFilter('admin.role:admin');
 		
     	return View::share('albums',Album::all());
     	
