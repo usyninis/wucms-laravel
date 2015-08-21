@@ -287,6 +287,20 @@ class AjaxController extends Controller {
 		return Response::json(['status'=>'error']);
 	}
 	
+	public function postImageSort()
+	{
+		$log = [];
+		if($images = Input::get('images')) 
+		{
+			//print_r($images);
+			foreach($images as $sort => $image_id) 
+			{				
+				Image::where('id','=',$image_id)->where('sort','!=',$sort)->update(['sort'=>$sort]);
+			}
+		}
+		return Response::json(['status'=>'ok','log'=>$log]);
+	}
+	
 	public function anyGroups($action)
 	{
 		$json = ['status'=>'error'];

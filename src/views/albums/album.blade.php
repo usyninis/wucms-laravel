@@ -25,7 +25,7 @@
 @endif
 </div>
 
-<div id="a-images-list" class="js-sortable-image album-list-images">
+<div id="a-images-list" class="{{ (object_get($album,'id')?'js-sortable-image':'') }} lbum-list-images">
 	
 	<div class="a-image a-image-upload js-no-move">
 		<div class="file-upload-form-fake">

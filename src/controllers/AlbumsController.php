@@ -97,7 +97,7 @@ class AlbumsController extends Controller {
 	{			
 		return View::make('wucms::albums.list')						
 			->with('album',Album::find($id))
-			->with('images',Image::whereAlbumId($id)->paginate(50));
+			->with('images',Image::whereAlbumId($id)->orderBy('sort','asc')->paginate(200));
 	}
 
 

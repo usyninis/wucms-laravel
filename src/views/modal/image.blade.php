@@ -10,16 +10,12 @@
 		'data-pubs'	=> 'notifyModal',
 		'method'	=> 'PUT'
 	)) }}
-			<label>
-			{{ trans('wucms::image.fields.src') }}
-			{{ Form::text('src',$image->src,[
-				'class'		=>'width-100 disabled',
-				'disabled'	=>'disabled',				
-				'style'=>'background:#e7e7e7;font-size:0.9em'
-			]) }}
-		</label>
-
 	<div class="units-row end">
+		
+		<div class="unit-50">
+		{{ HTML::image($image->thumb(400),$image->name,['style'=>'max-width:100%;max-height:300px']) }}
+		<br/>{{ $image->path }}
+		</div>
 		
 		<div class="unit-50">
 			<label>
@@ -40,14 +36,8 @@
 			
 			
 		</div>	
-		
-		<div class="unit-50">
-			{{ HTML::image($image->thumb(400),$image->name,['style'=>'max-width:100%;max-height:300px']) }}
-			
-
-			
-		</div>
 	</div>
+	
 	{{ Form::close() }}
 @endif
 </div>

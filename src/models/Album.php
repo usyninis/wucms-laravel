@@ -43,7 +43,7 @@ class Album extends \Eloquent
 	
 	public function images()
 	{
-		return $this->hasMany('Usyninis\Wucms\Image')->orderBy('id','DESC');
+		return $this->hasMany('Usyninis\Wucms\Image')->orderBy('sort','asc');
 	}
 	
 	public function image()

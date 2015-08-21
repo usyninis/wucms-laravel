@@ -16,8 +16,7 @@ return array(
 
     "accepted"             => "Вы должны принять :attribute.",   
     "fields"  => array(
-        "filename"		=> "Имя файла",
-        "name"		=> "Название изображения",
+        "name"		=> "Название",
         "album_id"		=> "Альбом",
         "description"		=> "Описание",
     )

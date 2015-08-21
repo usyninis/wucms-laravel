@@ -225,12 +225,18 @@ Wuapp.sub("document:ready",function(d){
 		//handle:".fa",
 		placeholder: "a-image fake",
 		items: ".a-image:not(.js-no-move)",
-		/*
 		
 		connectWith: ".js-sortable",
 		update: function(event, ui){
-			ui.item.parent("form").submit();
-		} */
+			//
+			var images = [];
+			$(".a-image").each(function() {
+				images.push($(this).data("id"));
+			});
+			$.post("/admin/ajax/image-sort",{images:images},function() {
+			
+			});
+		} 
 	});
 
 	$('.js-datepicker').Zebra_DatePicker({

@@ -71,8 +71,16 @@ class UsersController extends Controller
 			return Response::json($json);
 		}
 		$user = new User;
+		$user->first_name = Input::get('first_name');
+		$user->last_name = Input::get('last_name');
 		$user->email = Input::get('email');
+		if(Input::get('new_password')) $user->password = Input::get('new_password');
 		$user->save();
+		
+		if($roles = Input::get('roles'))
+		{		
+			$user->roles()->sync($roles);
+		}
 		
 		return Response::json(['status'=>'ok','message'=>'User create success','reload'=>url('admin/users/'.$user->id)]);
 	}
