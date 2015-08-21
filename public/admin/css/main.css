@@ -24,8 +24,7 @@ margin: 0 .5em .5em 0;
 line-height: 120px;
 overflow: hidden;
 text-align: center;}
-.a-image-upload{background:transparent}
-.a-image-upload:hover {background:transparent}
+
 	.a-image.ckecked{border: 2px solid green;background:green}
 	
 	.a-image .btn-delete{position: absolute;
@@ -188,14 +187,20 @@ font-size: 12px;}
 .list-s1 a.active{border-left: 3px solid rgba(0, 0, 0, 0.21);
 background: rgba(0, 0, 0, 0.04);}
 
-.file-upload-form-fake{position: absolute;top: 0;width: 100%;height: 120px;color: #6C6C6C;padding: 20px;}
+.file-upload-form-fake{
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 120px;color: #6C6C6C;padding: 20px;
+	text-align: center;
+}
 	.file-upload-form-fake .fupf-icon{display: block;line-height: 40px;font-size: 2.5em;}
 	.file-upload-form-fake .fupf-text{display: block;line-height: 20px;}
 	.file-upload-form-fake .fa-upload{display:block}
 	.file-upload-form-fake .fa-spinner{display:none}
 	.file-upload-form-fake.load .fa-upload{display:none}
 	.file-upload-form-fake.load .fa-spinner{display:block}
-.a-image-upload:hover .file-upload-form-fake{color:#333}
+.file-uploader:hover .file-upload-form-fake{color:#333}
 .file-upload-form{position: absolute;top: 0;width:100%;height: 120px;}
 	
 .file-upload-input{cursor: pointer;
@@ -308,7 +313,9 @@ color: #979797;}
 
 .sub-units.active{display: block;}
 	
-.list-el-s1{height: 100%;background: #ECECEC;}
+.list-el-s1{
+	
+}
 
 .el-s1{display: block;
 padding: .5em 1em;
@@ -481,6 +488,34 @@ font-family: 'Open Sans', sans-serif;
 .admin-breadcrumbs a:hover{}
 .admin-breadcrumbs a.active{color: white;background: rgba(64,64,64,1);}
 
+
+
+/*
+	albums
+
+*/
+
+.album{
+	position: relative;
+}
+.album__panel{
+	position: absolute;
+	left:0;
+	top:0;
+	width: 200px;
+}
+.album__images{
+	margin-left: 200px;
+	padding: 1em;
+}
+
+
+
+
+
+
+
+
 /*mce*/
 .input-flat {}
 .mce-i-wuimage:before {
@@ -509,6 +544,8 @@ border-radius: 5px;
 
 
 body .wu-modal-window-title{font-family: 'Open Sans', sans-serif;}
+
+
 
 
 

@@ -55,4 +55,5 @@ $album = Album::findOrNew(Input::get('id'));
 
 {{ Form::close() }}
 
+
 </div>

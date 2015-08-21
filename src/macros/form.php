@@ -24,8 +24,9 @@ Form::macro('delete',function($url, $button_label='Delete',$form_parameters = ar
 	else
 	{
         $form_parameters['url'] = $url;
-        $form_parameters['class'] = 'js-delete-form end '.array_get($form_parameters,'class');
+        $form_parameters['class'] = 'js-form end '.array_get($form_parameters,'class');
         $form_parameters['method'] = 'DELETE';
+        $form_parameters['data-confirm'] = 'Вы действительно хотите удалить этот элемент?';
     }
 	
 	$button_options['type'] = 'submit';

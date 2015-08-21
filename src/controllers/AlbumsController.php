@@ -145,6 +145,31 @@ class AlbumsController extends Controller {
 		
 	}
 
+	public function updateImages($id)
+	{	
+		$json = [];
+		
+		$album = Album::findOrFail($id);
+		
+		if($images = Input::get('images')) 
+		{
+			foreach($images as $sort => $image_id)
+			{
+				$image = Image::find($image_id);
+				$image->sort = $sort;
+				$image->save();
+			}
+		}
+		
+		$json['status'] = 'ok';
+		$json['message'] = 'Порядок обновлен';
+		
+		
+		return Response::json($json);
+			
+		
+	}
+
 
 	/**
 	 * Remove the specified resource from storage.

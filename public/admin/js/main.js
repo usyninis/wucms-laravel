@@ -13,6 +13,12 @@ $(document).on("change","form.js-upload-form",function( e ){
 	$(this).submit().html($(this).html());
 	
 });
+/*  .on("submit",".js-delete-form",function( e ) {
+  	if( ! confirm('Вы действительно хотите удалить этот элемент?')) {
+  	  return false;
+  	}
+  })
+*/
 $(document).on("change","form.js-form[data-submit-onchange]",function( e ){
 	$(this).submit();
 	
