@@ -21,10 +21,7 @@ class AjaxController extends Controller {
 
 	public function __construct()
     {
-        $this->beforeFilter('admin.auth');
-        //$this->beforeFilter('admin.role:admin');
-       // $this->beforeFilter('csrf');
-	   
+        $this->beforeFilter('admin.auth');	   
     }
 
 
