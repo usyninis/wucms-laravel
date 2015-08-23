@@ -20,15 +20,16 @@ use Illuminate\Support\Facades\View;
 class UsersController extends Controller 
 {
 
+	public function __construct()
+    {
+        $this->beforeFilter('admin.auth');
+        $this->beforeFilter('admin.role:superadmin');
+    }
+
+
 	public function index()
 	{
-        $this->beforeFilter('admin.auth');
-        $this->beforeFilter('admin.role:admin');
-		
-		
-		
-		return View::make('wucms::users.list')
-			
+		return View::make('wucms::users.list')			
 			->with('users',User::all());
 	}
 
@@ -36,19 +37,16 @@ class UsersController extends Controller
 	{
 		$cuser = User::find($id);
 		
-		return View::make('wucms::users.list')
-			
+		return View::make('wucms::users.list')			
 			->with('users',User::all())
 			->with('cuser',$cuser);
 	}
 
 	public function create()
 	{
-		$cuser = new User;
+		$cuser = new User;		
 		
-		
-		return View::make('wucms::users.list')
-			
+		return View::make('wucms::users.list')			
 			->with('users',User::all())
 			->with('cuser',$cuser);
 	}
@@ -57,8 +55,6 @@ class UsersController extends Controller
 
 	public function store()
 	{
-		$this->beforeFilter('auth');
-		$this->beforeFilter('admin');
 		$rules = [			
 			'email'	=> 'required|email|unique:users,email'
 		];
@@ -86,10 +82,7 @@ class UsersController extends Controller
 	}
 	
 	public function update($id)
-	{
-		$this->beforeFilter('auth');
-		$this->beforeFilter('admin');
-		
+	{		
 		$rules = [
 			
 			'email'	=> 'required|email|unique:users,email,'.$id,
@@ -105,7 +98,23 @@ class UsersController extends Controller
 			return Response::json($json);
 		}
 		
-		$json = ['status'=>'ok','message'=>'User update success'];
+		if($superadmin_role = Role::whereRole('superadmin')->first())
+		{
+
+			if(!in_array($superadmin_role->id, Input::get('roles')))
+			{
+				$other_superadmins = $superadmin_role->users()->where('id','!=',$id)->get();
+						
+				if ($other_superadmins->isEmpty()) 
+				{
+					$json['status'] = 'error';
+					$json['message'] = 'Это последний суперадминистратор';
+					return Response::json($json);
+				}
+			}
+
+		}
+		
 		
 		$user = User::find($id);
 		$user->first_name = Input::get('first_name');
@@ -114,6 +123,8 @@ class UsersController extends Controller
 		if(Input::get('new_password')) $user->password = Input::get('new_password');
 		$user->save();
 		
+
+		$json = ['status'=>'ok','message'=>'User update success'];
 		
 		if($roles = Input::get('roles'))
 		{		
@@ -133,11 +144,7 @@ class UsersController extends Controller
 	}
 
 	public function changePassword()
-	{
-		if( ! Auth::check()) return Response::make('Unauthorized', 401);
-		
-		//$cuser = Auth::user();
-		
+	{		
 		
 		$validator = Validator::make(Input::all(),array(
 			'old_password' => 'required|alphaNum|between:6,16',
@@ -171,53 +178,6 @@ class UsersController extends Controller
 		}
 		return Response::json($json);
 	}
-	
-	public function loginForm()
-	{
-		//return Session::get('back_url');
-		//$back_url = Session::get('back_url');
-		return View::make('wucms::login');
-	}
-
-	public function login()
-	{
-		$user = array(
-			'email' => Input::get('email'),
-			'password' => Input::get('password')
-		);
-		//print_r($user);        die();
-		
-		if (Auth::attempt($user,true)) 
-		{
-			
-			$back_url = Input::get('back_url') ?:  route('index');
-			
-			return Redirect::to($back_url);
-				//->with('flash_notice', 'You are successfully logged in.');
-		}
-		
-		// authentication failure! lets go back to the login page
-		return Redirect::route('admin.login.form')
-			->with('flash_error', 'Your email/password combination was incorrect.')
-			->with('back_url', Input::get('back_url'))
-			->withInput();
-	}
-	
-	public function logout()
-	{
-		if(Auth::check()) Auth::logout();
-		
-		if (Request::ajax())
-		{
-			
-			return Response::json(['status'=>'ok']);
-			
-		}
-		
-		return Redirect::back();		
-		
-	}
-	
 
 
 

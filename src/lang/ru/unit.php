@@ -16,7 +16,7 @@ return array(
 
     "accepted"             => "Вы должны принять :attribute.",   
     "fields"  => array(
-        "name"		=> "Имя элемента",
+        "name"		=> "Название страницы",
         "type"		=> "Тип элемента",
         "code"		=> "Код элемента",
         "template_id"  => "Шаблон",

@@ -3,13 +3,14 @@
 return array(
 
 	'app_enable'	=> true,
+
 	'app_code'		=> 'demo',
+
 	'admin_url'		=> 'admin',
 	
-	'access_panel'	=> array('superadmin','admin','manager'),
+	'access_panel'	=> array('superadmin','admin','manager'),	
 	
-	
-	'access_debug'	=> array(1),
+	'access_debug'	=> array(1), // users to debug btn
 	
 	'auth'			=> array(
 	

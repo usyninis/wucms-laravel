@@ -22,7 +22,7 @@ class AjaxController extends Controller {
 	public function __construct()
     {
         $this->beforeFilter('admin.auth');
-        $this->beforeFilter('admin.role:admin');
+        //$this->beforeFilter('admin.role:admin');
        // $this->beforeFilter('csrf');
 	   
     }
@@ -31,6 +31,7 @@ class AjaxController extends Controller {
 	
 	public function anyMap($action)
 	{
+        
 		$json = ['status'=>'error'];
 		switch($action)
 		{

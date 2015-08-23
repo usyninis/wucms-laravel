@@ -26,7 +26,7 @@
 				</div>
 				@endforeach	
 			@else
-				@include('admin.ui.empty')
+				@include('wucms::ui.empty')
 			@endif
 		@endif
 			

@@ -18,12 +18,14 @@ use Illuminate\Support\Facades\View;
 
 class SettingsController extends Controller 
 {
+	public function __construct()
+    {
+        $this->beforeFilter('admin.auth');
+        $this->beforeFilter('admin.role:superadmin');
+    }
 
 	public function index()
-	{
-        $this->beforeFilter('admin.auth');
-        $this->beforeFilter('admin.role:admin');
-		
+	{		
 		return View::make('wucms::settings.list');
 	}
 

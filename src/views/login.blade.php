@@ -3,7 +3,11 @@
 
 @section('content')
 
-	<div style="width:300px;margin:0 auto"> 
+	<div style="    width: 300px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 1em 1em 0.1em 1em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);"> 
 
     @if (Session::has('flash_error'))
         <div class="tools-alert tools-alert-red">{{ Session::get('flash_error') }}</div>

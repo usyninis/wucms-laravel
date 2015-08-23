@@ -19,25 +19,25 @@
 
 Route::get('admin', array(
 	'before'	=> 'admin.auth',
-	function(){
+	function() {
 		return Redirect::route('admin.units.index');
 	}
 ));
 Route::get('admin/login', array(
 	'as'		=> 'admin.login.form',
 	'before'	=> 'admin.guest',
-	'uses'		=> 'Usyninis\Wucms\UsersController@loginForm'
+	'uses'		=> 'Usyninis\Wucms\AuthController@loginForm'
 ));
 
 Route::post('admin/login',[
 	'as'		=> 'admin.login',
 	'before'	=> 'admin.guest',
-	'uses'		=> 'Usyninis\Wucms\UsersController@login'
+	'uses'		=> 'Usyninis\Wucms\AuthController@login'
 ]);
 
 Route::get('admin/logout', array(
 	'as'		=> 'admin.logout',
-	'uses'		=> 'Usyninis\Wucms\UsersController@logout'
+	'uses'		=> 'Usyninis\Wucms\AuthController@logout'
 ));
 
 Route::group(

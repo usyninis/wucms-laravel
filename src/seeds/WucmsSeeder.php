@@ -1,6 +1,6 @@
 <?php
 
-class DatabaseSeeder extends Seeder {
+class WucmsSeeder extends Seeder {
 
 	/**
 	 * Run the database seeds.
@@ -10,8 +10,7 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Eloquent::unguard();
-
-		$this->call('UsersSeeder');
+		
 		$this->call('CoreSeeder');
 		
 	}

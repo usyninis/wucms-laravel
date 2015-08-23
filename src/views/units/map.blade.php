@@ -225,7 +225,7 @@ border-radius: 2px;}
 		@endif
 		{{ Form::hidden('level',1) }}
 		{{ Form::hidden('sort',9999) }}
-		<label>{{ trans('admin.fields.name') }} {{ Form::text('name',null,array('placeholder'=>'','class' => 'input-smaller width-100')) }}</label>						
+		<label>{{ trans('wucms::unit.fields.name') }} {{ Form::text('name',null,array('placeholder'=>'','class' => 'input-smaller width-100')) }}</label>						
 		{{ Form::button('Добавить',array('class'	=> 'btn btn-blue smaller','type'=>'submit')) }}
 		{{ Form::button('Отмена',array('class'	=> 'btn smaller js-show','data-show'=>'.dfsdfsdf,.section-list-tools','data-hide'=>'#create-unit-form','type'=>'button')) }}
 

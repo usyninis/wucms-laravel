@@ -46,7 +46,8 @@ class UpdateCommand extends Command {
 			$unit->save();		
 			$unit->recount();				
 		}
-		
+		$this->call('asset:publish', array('--package' => 'Usyninis/Wucms'));
+		$this->call('asset:publish', array('--bench' => 'Usyninis/Wucms'));
 		$this->info('Update Successfull!');
 	}
 

@@ -28,13 +28,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password', 'remember_token');
 	
 	/*
-		êàêèå ïîëÿ äîëæíû áûòü äîñòóïíû ïğè ìàññîâîì çàïîëíåíèè
+		ÃªÃ ÃªÃ¨Ã¥ Ã¯Ã®Ã«Ã¿ Ã¤Ã®Ã«Ã¦Ã­Ã» Ã¡Ã»Ã²Ã¼ Ã¤Ã®Ã±Ã²Ã³Ã¯Ã­Ã» Ã¯Ã°Ã¨ Ã¬Ã Ã±Ã±Ã®Ã¢Ã®Ã¬ Ã§Ã Ã¯Ã®Ã«Ã­Ã¥Ã­Ã¨Ã¨
 	*/
 	
 	protected $fillable = array('first_name', 'last_name', 'email');
 	
 	/*	
-		ñïèñîê çàïğåù¸ííûõ ê çàïîëíåíèş ïîëåé
+		Ã±Ã¯Ã¨Ã±Ã®Ãª Ã§Ã Ã¯Ã°Ã¥Ã¹Â¸Ã­Ã­Ã»Ãµ Ãª Ã§Ã Ã¯Ã®Ã«Ã­Ã¥Ã­Ã¨Ã¾ Ã¯Ã®Ã«Ã¥Ã©
 	*/
 	
 	protected $guarded = array('id', 'password');	
@@ -42,7 +42,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	
 	public function getNameAttribute()
 	{		 
-		$name = trim($this->attributes['first_name'].' '.$this->attributes['last_name']);
+		$name = trim(array_get($this->attributes,'first_name').' '.array_get($this->attributes,'last_name'));
 		if(!empty($name)) return $name;
 		return $this->attributes['email'];
 	}
