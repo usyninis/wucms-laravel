@@ -55,16 +55,13 @@ class AuthController extends Controller {
 	
 	public function logout()
 	{
-		if(Auth::check()) Auth::logout();
-		
+		if(Auth::check()) Auth::logout();		
 		if (Request::ajax())
-		{
-			
-			return Response::json(['status'=>'ok']);
-			
+		{			
+			return Response::json(['status'=>'ok']);			
 		}
-		
-		return Redirect::back();		
+		$back_url = URL::previous() ? URL::previous() : route('index');
+		return Redirect::to($back_url);		
 		
 	}
 	

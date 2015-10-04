@@ -28,6 +28,7 @@ class AjaxController extends Controller {
 	
 	public function anyMap($action)
 	{
+        $this->beforeFilter('admin.role:admin');
         
 		$json = ['status'=>'error'];
 		switch($action)
@@ -70,6 +71,7 @@ class AjaxController extends Controller {
 	
 	public function getImages($action)
 	{
+        $this->beforeFilter('admin.role:admin');
 		$json = ['status'=>'error'];
 		switch($action)
 		{
@@ -96,6 +98,7 @@ class AjaxController extends Controller {
 	
 	public function anyTemplates($action)
 	{
+        $this->beforeFilter('admin.role:admin');
 		$json = ['status'=>'error'];
 		switch($action)
 		{
@@ -136,6 +139,7 @@ class AjaxController extends Controller {
 
 	public function anySettings($action)
 	{
+        $this->beforeFilter('admin.role:superadmin');
 		$json = ['status'=>'error'];
 		switch($action)
 		{
@@ -186,6 +190,7 @@ class AjaxController extends Controller {
 	
 	public function anyTypes($action)
 	{
+        $this->beforeFilter('admin.role:admin');
 		$json = ['status'=>'error'];
 		switch($action)
 		{
@@ -236,6 +241,7 @@ class AjaxController extends Controller {
 	
 	public function anyUnits($action)
 	{
+        $this->beforeFilter('admin.role:admin');
 		$json = ['status'=>'error'];
 		switch($action)
 		{
@@ -279,6 +285,7 @@ class AjaxController extends Controller {
 	
 	public function anyUi($code,$value=false)
 	{
+        $this->beforeFilter('admin.role:admin');
 		$codes = ['uet'];
 		if(in_array($code,$codes)) 
 		return Session::put('ui.'.$code,$value);
@@ -287,6 +294,7 @@ class AjaxController extends Controller {
 	
 	public function postImageSort()
 	{
+        $this->beforeFilter('admin.role:admin');
 		$log = [];
 		if($images = Input::get('images')) 
 		{
@@ -301,6 +309,7 @@ class AjaxController extends Controller {
 	
 	public function anyGroups($action)
 	{
+        $this->beforeFilter('admin.role:admin');
 		$json = ['status'=>'error'];
 		switch($action)
 		{
@@ -383,6 +392,7 @@ class AjaxController extends Controller {
 	*/
 	public function getModal($code)
 	{
+        $this->beforeFilter('admin.role:admin');
 		return View::make('wucms::modal.'.$code);
 	}
 
