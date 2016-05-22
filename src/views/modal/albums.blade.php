@@ -67,11 +67,31 @@
 		</div>
 			
 		
-		@foreach($images as $image)
-		
+		<?php 
+			foreach($images as $key => $image)
+			{ 
+				if($key>42)
+				{
+					echo '<button class="btn small js-pub" id="showMoreImages" data-pub="showMoreImages" type="button">Показать все ('.count($images).')</button>';
+					break;
+				}
+			?>
 			<div class="a-image js-pub" data-change-id="{{ Input::get('id') }}" data-pub="{{ Input::get('pub') }}" data-id="{{ $image->id }}" data-src="{{ $image->src }}" data-thumb="{{ $image->thumb(200) }}">{{ HTML::image($image->thumb(200),$image->name) }}</div>
-		
-		@endforeach
+			<?php
+			}
+			echo '<div id="showMoreImagesList" class="hide">';
+			foreach($images as $key => $image)
+			{ 
+				if($key>42)
+				{
+					?>
+					<div class="a-image js-pub" data-change-id="{{ Input::get('id') }}" data-pub="{{ Input::get('pub') }}" data-id="{{ $image->id }}" data-src="{{ $image->src }}" data-thumb="{{ $image->thumb(200) }}"></div>
+					<?php
+
+				}
+			}
+			echo '</div>';
+		?>
 	</div>
 	
 @endif

@@ -364,3 +364,11 @@ Wuapp.sub("notify",function(d){
 	if(d.message) $("#"+id).message();
 	if(d.status=='ok' && d.reload) window.location.href=d.reload;
 });
+
+Wuapp.sub("showMoreImages" ,function() {
+	$("#showMoreImages").hide();
+	$("#showMoreImagesList").find('.a-image').each(function() {
+		$(this).html('<img src="' + $(this).data('thumb') + '" />')
+	});
+	$("#showMoreImagesList").show();
+});
