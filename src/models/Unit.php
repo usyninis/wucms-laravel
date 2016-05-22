@@ -482,10 +482,10 @@ class Unit extends Eloquent
 
 	public function propm($code)
 	{
-		return $this->prop($code,true);
+		return $this->prop($code, true);
 	}
 	
-	public function prop($code,$multiple=false)
+	public function prop($code, $multiple=false)
 
 	{
 		//$prop = Prop::where('code','=',$code)->

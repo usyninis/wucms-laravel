@@ -68,7 +68,7 @@ Form::macro('wuCheckbox', function($name=null, $value=null, $checked=false, $att
 {
 	$html = '<div class="wu-checkbox-field '.array_get($attr,'class').'">';
 	$html .= '<label class="wu-checkbox'.($checked?' checked':'').'">';	
-	$html .= Form::checkbox($name,$value,$checked);
+	$html .= Form::checkbox($name, $value, $checked);
 	$html .= '<div class="wu-checkbox-ind"></div>';	
 	$html .= '<div class="wu-checkbox-sts wu-checkbox-sts-on">Да</div>';	
 	$html .= '<div class="wu-checkbox-sts wu-checkbox-sts-off">Нет</div>';	
@@ -123,6 +123,7 @@ Form::macro('prop', function($prop, $unit_props=array())
 	$html = '<div class="prop-field group">';
 	$html .= '<div class="prop-name">';
 	$html .= $prop->name;
+	if($prop->required) $html .= ' <span class="req">*</span>';
 	if($prop->multiple) $html .= '<i class="fa fa-plus js-pub right" title="Добавить значение свойства" data-pub="units.cloneProp" data-id="'.$prop->id.'"></i>';
 	if($prop->description) $html .= '<i class="fa fa-question-circle right" title="'.$prop->description.'"></i>';
 	$html .= '</div>';
@@ -137,14 +138,15 @@ Form::macro('prop', function($prop, $unit_props=array())
     {
 		case 'int':
 			
-			foreach($unit_props as $uprop) //dd($uprop);
-			//print_array($uprop->prop);
+			foreach($unit_props as $uprop)
 			if($uprop->prop_id==$prop->id) 
 			{		
 				$need_empty = false;		
-				$html .= $bvhtml.Form::text('props['.$prop->id.'][]',$uprop->value_int,['class'=>'width-90']).$avhtml;// $value = $uprop->value_text;
+				$html .= $bvhtml .
+				Form::text('props['.$prop->id.'][]', $uprop->value_int, ['class'=>'width-90', 'data-required' => $prop->required]) . $avhtml;// $value = $uprop->value_text;
 			}
-			if($prop->multiple || $need_empty) $html .= $prop_tpl = $bvhtml.Form::text('props['.$prop->id.'][]',null,['class'=>'width-90']).$avhtml;// $value = $uprop->value_text;
+			if($prop->multiple || $need_empty) $html .= $prop_tpl = $bvhtml .
+				Form::text('props['.$prop->id.'][]', null, ['class'=>'width-90', 'data-required' => $prop->required]) . $avhtml;// $value = $uprop->value_text;
 			break;
 			
 		case 'string':
@@ -153,9 +155,11 @@ Form::macro('prop', function($prop, $unit_props=array())
 			{
 				$need_empty = false;		
 				
-				$html .= $bvhtml.Form::text('props['.$prop->id.'][]',$uprop->value_string,['class'=>'width-90']).$avhtml;// $value = $uprop->value_text;
+				$html .= $bvhtml .
+					Form::text('props['.$prop->id.'][]', $uprop->value_string, ['class'=>'width-90', 'data-required' => $prop->required]) . $avhtml;// $value = $uprop->value_text;
 			}
-			if($prop->multiple || $need_empty) $html .= $prop_tpl = $bvhtml.Form::text('props['.$prop->id.'][]',null,['class'=>'width-90']).$avhtml;
+			if($prop->multiple || $need_empty) $html .= $prop_tpl = $bvhtml .
+				Form::text('props['.$prop->id.'][]', null, ['class'=>'width-90', 'data-required' => $prop->required]) . $avhtml;
 			break;
 			
 		case 'prop':

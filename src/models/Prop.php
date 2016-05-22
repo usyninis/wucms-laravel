@@ -33,6 +33,7 @@ class Prop extends Eloquent {
 			'int'		=> 'Число',
 			'string'	=> 'Строка',
 			'text'		=> 'Текст',
+			//'date'		=> 'Дата',
 			'album'		=> 'Альбом',
 			'unit'		=> 'Элемент',
 			'list'		=> 'Элемент из списка',

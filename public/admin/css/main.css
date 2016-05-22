@@ -214,16 +214,25 @@ font-size: 120px;}
 margin: 1em 0 0 0;
 font-size: 12px;
 border-bottom: 1px solid #D7D7D7;}
-.prop-field .prop-name{float: left;
-width: 20%;
-font-size: 12px;
-line-height: 18px;
-color: #818181;}
-.prop-field .prop-name .fa{line-height:28px;width:28px;text-align:center;cursor:pointer}
+.prop-field .prop-name{
+	float: left;
+	width: 25%;
+	font-size: 12px;
+	line-height: 18px;
+	color: #818181;
+	position: relative;
+	padding-right: 20px;
+}
+.prop-field .prop-name .fa{
+	line-height:28px;width:28px;text-align:center;cursor:pointer;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
 .prop-field .prop-name .fa:hover{color:#F78254}
 
 
-.prop-field .prop-values{float: left;width: 80%;}
+.prop-field .prop-values{float: left;width: 75%;}
 .prop-field .prop-value{margin-bottom: .5em;background: #fff;}
 .prop-field .prop-value.fake{height:28px;background-color:rgba(0,0,0,0.12)}
 .prop-field .prop-value-template{display:none}
@@ -339,8 +348,15 @@ border-bottom: 1px solid #DFDFDF;}
 
 
 .list-unit-props{}
-.list-unit-props-free{}
-.list-unit-props-free .btn{margin:1em 0 0 20%}
+.list-unit-props-free{
+
+}
+.list-unit-props-free .el-s1{
+	height: auto;
+}
+.list-unit-props-free .btn{
+	margin:1em 0 0 25%;
+}
 
 	
 

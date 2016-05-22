@@ -1,6 +1,4 @@
 
-<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-
 
 
 @if($unit->id)
@@ -19,19 +17,25 @@
 	
 	
 	<div class="group">
-		<div class="width-80" style="float:left;position:relative;"><span style="position:absolute;right:10px;z-index:2;color: #9B9B9B;top:2px">ID: {{ $unit->id }}</span>{{ Form::text('name',null,['class'=>'width-100','style'=>'position:relative;z-index:1']) }}</div>
-		
-		<div class="width-20" style="float:left"><a class="btn width-100" target="_blank" href="{{ url('admin/units/'.$unit->id.'?preview=true') }}"><i class="fa fa-search"></i> Просмотр</a></div>
+		<div class="width-80" style="float:left;position:relative;">
+			<span style="position:absolute;right:10px;z-index:2;color: #9B9B9B;top:4px;">ID: {{ $unit->id }}</span>
+			{{ Form::text('name', null, ['class'=>'width-100', 'style'=>'position:relative;z-index:1', 'data-required'=>1]) }}
+		</div>
+		<div class="width-20" style="float:left">
+			<a class="btn width-100" target="_blank" href="{{ url('admin/units/'.$unit->id.'?preview=true') }}">
+				<i class="fa fa-search"></i> Просмотр
+			</a>
+		</div>
 	</div>
 	
 	</div>
 	
 	<nav class="navbar nav-pills">
 		<ul>
-		<li><a class="js-tab js-ajax{{ Session::get('ui.uet')==1||!Session::get('ui.uet')? ' tab-active' : '' }}" data-action="ui/uet/1" data-content="tab-1">Основные данные</a></li>
-		<li><a class="js-tab js-ajax{{ Session::get('ui.uet')==2? ' tab-active' : '' }}" data-action="ui/uet/2" data-content="tab-2">Содержание</a></li>
-		<li><a class="js-tab js-ajax{{ Session::get('ui.uet')==3? ' tab-active' : '' }}" data-action="ui/uet/3" data-content="tab-3">СЕО</a></li>
-		<li><a class="js-tab js-ajax{{ Session::get('ui.uet')==4? ' tab-active' : '' }}" data-action="ui/uet/4" data-content="tab-4">Свойства</a></li>
+			<li><a class="js-tab js-ajax{{ Session::get('ui.uet')==1||!Session::get('ui.uet')? ' tab-active' : '' }}" data-action="ui/uet/1" data-content="tab-1">Основные данные</a></li>
+			<li><a class="js-tab js-ajax{{ Session::get('ui.uet')==2? ' tab-active' : '' }}" data-action="ui/uet/2" data-content="tab-2">Содержание</a></li>
+			<li><a class="js-tab js-ajax{{ Session::get('ui.uet')==4? ' tab-active' : '' }}" data-action="ui/uet/4" data-content="tab-4">Свойства</a></li>
+			<li><a class="js-tab js-ajax{{ Session::get('ui.uet')==3? ' tab-active' : '' }}" data-action="ui/uet/3" data-content="tab-3">СЕО</a></li>
 		</ul>
 	</nav>
 	
@@ -165,9 +169,9 @@
 			<?php /* <h3 class="groups-title"><span>Основные свойства</span></h3> */ ?>
 			@foreach($props as $prop)
 				
-				@if( in_array($prop->id,$type_props) || $unit->prop($prop->code) )
+				@if( in_array($prop->id, $type_props) || $unit->prop($prop->code) )
 				<div id="prop-{{ $prop->id }}">
-				{{ Form::prop($prop,$unit->props) }}
+				{{ Form::prop($prop, $unit->props) }}
 				</div>
 				@endif
 				
@@ -195,7 +199,7 @@
 					
 					<div id="list-no-add-props" class="hide">
 					@foreach($props as $prop)
-						@if( ! in_array($prop->id,$type_props) && ! $unit->prop($prop->code) )
+						@if( ! in_array($prop->id, $type_props) && ! $unit->prop($prop->code) )
 						<div class="js-add-prop el-s1" data-id="{{ $prop->id }}">
 							<div class="el-name">{{ $prop->name }}</div>
 							<div class="el-desc">{{ $prop->description }}</div>

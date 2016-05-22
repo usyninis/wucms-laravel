@@ -65,8 +65,8 @@
 				
 			
 			
-			{{ Form::wuCheckbox('multiple',1,$prop->multiple,['label'=>'Множественное свойство']) }}
-			{{ Form::wuCheckbox('required',1,$prop->required,['label'=>'Обязательное свойство']) }}
+			{{ Form::wuCheckbox('multiple', 1, $prop->multiple,['label'=>'Множественное свойство']) }}
+			{{ Form::wuCheckbox('required', 1, $prop->required,['label'=>'Обязательное свойство']) }}
 		
 		</div>
 	</div>

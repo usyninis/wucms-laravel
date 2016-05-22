@@ -145,6 +145,23 @@ $(document).on("submit","form.js-form",function( e ){
 	var ps = $form.data('pubs');
 	$form.ajaxSubmit({
 		url: url,
+		beforeSubmit: function() {
+			var valid = true;
+			$form.find('input, textarea').each(function() {
+				if($(this).data('required')==1 && $(this).val().trim()=='') {
+					valid = false;
+					$(this).addClass('input-error');
+					//var $tabContent = $(this).parents('.js-tab-content');
+					$('.js-tab[data-content=' + $(this).parents('.js-tab-content').attr('id') + ']').click();
+				} else {
+					$(this).removeClass('input-error');
+				}
+			});
+			if (!valid) {
+				$form.data(alc, false).removeClass(alc);
+				return false;
+			}
+		},
 		//dataType:"json",
 		dataType:"json",
 		error: function(){
