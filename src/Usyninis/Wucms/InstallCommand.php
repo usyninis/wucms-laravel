@@ -42,7 +42,7 @@ class InstallCommand extends Command {
 		$this->call('migrate',array('--path' => 'workbench/usyninis/wucms/src/migrations'));
 		$this->call('migrate',array('--package' => 'Usyninis/Wucms'));
 		//$this->call('asset:publish', array('--package' => 'Usyninis/Wucms'));
-		//$this->call('asset:publish', array('--bench' => 'Usyninis/Wucms'));
+		$this->call('asset:publish', array('--bench' => 'Usyninis/Wucms'));
 		$this->info('Install Successfull!');
 	}
 

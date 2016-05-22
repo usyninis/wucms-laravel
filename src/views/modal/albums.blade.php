@@ -14,10 +14,9 @@
 	
 	
 ?>
-<style>
-.gallery-photo.in-modal{}
-</style>
+
 <meta name="wu-modal-title" content="Добавить изображение">
+<div class="s-modal-images">
 <div class="units-row end">
 
 <div class="unit-20">
@@ -76,5 +75,6 @@
 	</div>
 	
 @endif
+</div>
 </div>
 </div>

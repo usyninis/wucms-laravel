@@ -4,6 +4,11 @@ body{background-color: #e7e7e7;height:100%}
 .section-content{margin-left:110px;height:100%} 
 .h-h100{height:100%}
 
+.s-modal-images{
+	max-height: 600px;
+	overflow: auto;
+
+}
 .section-help{background: #DAD9D9;
 padding: .5em 1em;font-size: 12px;
 border-radius: 2px;
