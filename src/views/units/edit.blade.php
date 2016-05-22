@@ -204,9 +204,6 @@
 							<div class="el-name">{{ $prop->name }}</div>
 							<div class="el-desc">{{ $prop->description }}</div>
 						</div>
-						<div id="prop-{{ $prop->id }}" class="hide">
-						{{ Form::prop($prop,$unit->props) }}
-						</div>
 						@endif
 					@endforeach
 					</div>
@@ -232,6 +229,15 @@
 
 {{ Form::close() }}
 
+					<div id="list-no-add-props2" class="hide">
+					@foreach($props as $prop)
+						@if( ! in_array($prop->id, $type_props) && ! $unit->prop($prop->code) )
+						<div id="prop-{{ $prop->id }}" class="hide">
+						{{ Form::prop($prop,$unit->props) }}
+						</div>
+						@endif
+					@endforeach
+					</div>
 
 
 @endif
@@ -242,7 +248,7 @@ $(function(){
 			var id = $(this).data('id');
 			var $prop = $("#prop-"+id);
 			$prop.clone().appendTo("#list-unit-props").show().find('input').focus();
-			$("#list-no-add-props #prop-"+id).remove();
+			$("#list-no-add-props2 #prop-"+id).remove();
 			$(this).remove();
 			$("#list-no-add-props").hide();
 			$("#btn-prop-add").show();
