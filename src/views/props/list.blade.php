@@ -60,6 +60,9 @@
 			<div class="el-btn"><i class="fa fa-ellipsis-v"></i></div>
 		</div>
 		*/?>
+		<div class="el-right-s">	
+			<div class="js-confirm-ajax el-btn" data-action="props/delete" data-pub="notify reload" data-id="{{ $prop->id }}"><i class="fa fa-trash-o"></i></div>
+		</div>
 			<div class="el-name">{{ $prop->name }}</div>
 			<div class="el-desc">{{ $prop->description }}</div>
 		</div>

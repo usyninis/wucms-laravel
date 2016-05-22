@@ -137,6 +137,26 @@ class AjaxController extends Controller {
 		return Response::json($json);
 	}
 
+	public function anyProps($action)
+	{
+        $this->beforeFilter('admin.role:superadmin');
+		$json = ['status'=>'error'];
+		switch($action)
+		{
+			case 'delete':
+				if($prop = Prop::find(Input::get('id')))
+				{
+					\DB::table('prop_unit')->where('prop_id', '=', $prop->id)->delete();
+					\DB::table('prop_type')->where('prop_id', '=', $prop->id)->delete();
+					$prop->delete();
+				}
+				$json = ['status'=>'ok'];
+				break;
+		}
+		return Response::json($json);
+
+    }
+
 	public function anySettings($action)
 	{
         $this->beforeFilter('admin.role:superadmin');
